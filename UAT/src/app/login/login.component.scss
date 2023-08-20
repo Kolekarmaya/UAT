@@ -1,0 +1,53 @@
+mat-expansion-panel {
+  min-width: 320px;
+  max-width: 400px;
+  margin: auto;
+  top: 100px;
+  position: relative;
+}
+
+.field {
+  mat-form-field{
+    width: 100%;
+  }
+}
+
+.button{
+  text-align: right;
+  font-size: 12px !important;
+  color:#3f51b5
+}
+
+.labelFont{
+  font-size: 15px;
+  font-weight: 500;
+}
+
+
+.my-overlay {
+  left: 0 !important;
+  top: 0 !important;
+  z-index: 10000 !important;
+  height: 100% !important;
+  position: fixed !important;
+  cursor: pointer !important;
+  visibility: visible !important;
+  transition: visibility 0s, opacity 0.4s linear !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: wait !important;
+}
+
+
+.errorbgcolor {
+background-color: #f1f18a;
+}
+.messagebgcolor {
+background-color: white;
+}
+
+
+
+
+

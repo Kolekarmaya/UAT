@@ -1,0 +1,166 @@
+<div class="" *ngIf="!showOverlay">    
+    <mat-toolbar color="primary" style="display: flex;flex-direction: row;">    
+        <mat-toolbar-row style="background:darkblue; margin:10px; height: 55px;">          
+            <div>
+                <button mat-icon-button [matMenuTriggerFor]="payoutList" class="example-icon" aria-label="Example icon-button with menu icon">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span> Living Benefits </span> 
+                <mat-menu #payoutList="matMenu">
+                    <ng-template matMenuContent>
+                        <!-- <button mat-menu-item (mouseenter)="menuenter('MATURITY', 'L')" [matMenuTriggerFor]="payout" > Maturity </button> -->
+                        <button mat-menu-item  [matMenuTriggerFor]="maturityPayout" > Maturity </button>
+                        <button mat-menu-item (mouseenter)="menuenter('ANNUITY', 'L')" [matMenuTriggerFor]="payout2"> Annuity </button>
+                        <button mat-menu-item (mouseenter)="menuenter('FLC','L')" [matMenuTriggerFor]="payout2"> FLC </button>
+                    </ng-template>
+                </mat-menu> 
+            </div> 
+        </mat-toolbar-row>
+
+        <mat-menu #maturityPayout="matMenu">
+            <ng-template matMenuContent>
+                <button mat-menu-item (mouseenter)="menuenter('Swadhan', 'L', 1)" [matMenuTriggerFor]="payout2"> Swadhan </button>
+                <button mat-menu-item (mouseenter)="menuenter('Micro_Insurance', 'L', 2)" [matMenuTriggerFor]="payout2"> Micro Insurance </button>
+                <button mat-menu-item (mouseenter)="menuenter('Swarna_Ganga', 'L', 3)" [matMenuTriggerFor]="payout"> Swarna Ganga </button>
+            </ng-template>
+        </mat-menu>   
+
+
+        
+        <mat-toolbar-row style="background:darkblue; margin:10px; height: 55px;">
+            <div>
+                <button mat-icon-button [matMenuTriggerFor]="payoutList2" class="example-icon" aria-label="Example icon-button with menu icon">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span> Death Benefits </span> 
+                <mat-menu #payoutList2="matMenu">
+                    <ng-template matMenuContent>
+                        <!-- <button mat-menu-item (mouseenter)="menuenter('DEATH', 'D')" [matMenuTriggerFor]="payout"> Death </button> -->
+                        <!-- <button mat-menu-item (mouseenter)="menuenter('SURRENDER', 'D')" [matMenuTriggerFor]="payout"> Surrender </button> -->
+                        <button mat-menu-item (mouseenter)="menuenter('RINN_RAKSHA','D')" [matMenuTriggerFor]="payout"> Rinn Raksha </button>
+                        <button mat-menu-item (mouseenter)="menuenter('DHANRAKSHA','D')" [matMenuTriggerFor]="payout"> Dhanraksha </button>
+                        <button mat-menu-item (mouseenter)="menuenter('MICRO_INSURANCE','D')" [matMenuTriggerFor]="payout"> Micro Insurance </button>
+                        <button mat-menu-item (mouseenter)="menuenter('GROUP_SWADHAN','D')" [matMenuTriggerFor]="payout"> Group Swadhan </button>
+                        <button mat-menu-item (mouseenter)="menuenter('SWARNA_GANGA','D')" [matMenuTriggerFor]="payout"> Swarna Ganga </button>
+                        <button mat-menu-item (mouseenter)="menuenter('KISAN_CREDIT_CARD','D')" [matMenuTriggerFor]="payout"> Kisan Credit Card </button>
+                        <button mat-menu-item (mouseenter)="menuenter('SUPER_SURAKSHA','D')" [matMenuTriggerFor]="payout"> Super Suraksha </button>
+                        <button mat-menu-item (mouseenter)="menuenter('GIT_SAMPOORN_SURAKSHA','D')" [matMenuTriggerFor]="payout"> GTI Sampoorn Suraksha </button>
+                        <button mat-menu-item (mouseenter)="menuenter('REPUDIATION','D')" [matMenuTriggerFor]="payout2"> REPUDIATION </button>
+                        <button mat-menu-item (mouseenter)="menuenter('Swarn_Jeevan','D')" [matMenuTriggerFor]="payout2"> Swarn Jeevan </button>
+
+                    </ng-template>
+                </mat-menu> 
+            </div> 
+        </mat-toolbar-row>    
+        
+        <mat-toolbar-row style="background:darkblue; margin:10px; height: 55px;">
+            <div>
+                <button mat-icon-button [matMenuTriggerFor]="payoutList3" class="example-icon" aria-label="Example icon-button with menu icon">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span> Surrender Benefits </span> 
+                <mat-menu #payoutList3="matMenu">
+                    <ng-template matMenuContent>
+                        <button mat-menu-item (mouseenter)="menuenter('RINN_RAKSHA', 'S')" [matMenuTriggerFor]="payout2"> Rinn Raksha </button>
+                        <button mat-menu-item (mouseenter)="menuenter('DHANRAKSHA', 'S')" [matMenuTriggerFor]="payout2"> Dhanraksha </button>
+                        <button mat-menu-item (mouseenter)="menuenter('GROUP_SWADHAN', 'S')" [matMenuTriggerFor]="payout2"> Group Swadhan </button>
+                    </ng-template>
+                </mat-menu> 
+            </div> 
+        </mat-toolbar-row>  
+
+         
+        <mat-menu #payout="matMenu">
+            <ng-template matMenuContent>
+                <button mat-menu-item  (click)="selectedPayout('PROCESS_INPUT')"> PROCESS INPUT </button>
+                <button mat-menu-item (click)="selectedPayout('PROCESS_LOGIC')"> PROCESS OUTPUT </button>
+                <button mat-menu-item (click)="selectedPayout('PROCESS_OUTPUT')"> PROCESS QC </button>
+                <button mat-menu-item (click)="selectedPayout('VIEWQCDATA')"> VIEW QC DATA </button>
+            </ng-template>
+        </mat-menu>   
+
+        <mat-menu #payout2="matMenu">
+            <ng-template matMenuContent>
+                <button mat-menu-item  (click)="selectedPayout('PROCESS_CALCULATION')"> PROCESS CALCULATION </button>
+                <!-- <button mat-menu-item (click)="selectedPayout('PROCESS_LOGIC')"> PROCESS_OUTPUT </button> -->
+                <button mat-menu-item (click)="selectedPayout('PROCESS_OUTPUT')"> PROCESS QC </button>
+                <button mat-menu-item (click)="selectedPayout('VIEWQCDATA')"> VIEW QC DATA </button>
+            </ng-template>
+        </mat-menu>   
+    </mat-toolbar>    
+</div>
+
+<div class="my-overlay1" *ngIf="showOverlay" style="display: flex; flex-direction: column;">
+    <i class="fa fa-spinner fa-spin" aria-hidden="true" style="color: white;"></i>
+    <span style="color:white; font-size: 30px;">Please wait...</span>
+</div>
+
+<div *ngIf="displayMessage" style="padding: 30%; padding-top: 50px;padding-bottom: 0;">
+    <div class="customAlert"
+            [ngClass]="(isError==true)?'errorbgcolor':'messagebgcolor'"
+             style="
+                height: 190px;
+                border: groove;
+                box-shadow: 5px 10px #888888;">
+        <div class="messageheader" style="padding: 30px;font-weight: 500;font-size: 25px;padding-bottom: 15px;
+                                            background: #3f51b5;color: white;
+                                            padding-top: 10px;margin-bottom: 15px">
+            <!-- Information Message :   -->
+            {{ messageType }}
+        </div>
+        <div class="messagebody" style="font-weight: 500;padding-left: 30px; padding-bottom: 10px;">
+            <!-- server [ error_code : 1 ]  -->
+            {{ message }}
+        </div>
+        <div class="messagebody" style="text-align: center;font-weight: 500;font-size: 20px;">
+            <!-- No Data Available -->
+             {{ messageDetails }}
+        </div>
+    
+        <div style="text-align: right;margin-top: 30px;padding-right: 30px;">
+            <button style="width: 20%;height: 30px;" (click)="showMessage()">OK</button>
+        </div>
+    
+    </div>
+</div>
+<ng-template #dateDialog>
+    <!-- <h1 mat-dialog-title>Dialog with elements</h1> -->
+    <div mat-dialog-content>
+        <div>
+            <div style="display: flex; flex-direction: row; text-align: center;">
+                <div style="margin: 34px;font-weight: 500;">Enter date range </div>
+                <div style="margin: 10px;">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select Start Date</mat-label>
+                        <input matInput [matDatepicker]="picker1"
+                                (dateChange)="addStartDate( $event)">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div style="margin: 10px;">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select End Date</mat-label>
+                        <input matInput [matDatepicker]="picker2"
+                                (dateChange)="addEndDate( $event)">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div style="margin-top: 20px; margin-left: 20px;">
+                    <button mat-raised-button color="primary" (click)="showDateTime()">
+                        Submit                                       
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+</ng-template>
+
+<div *ngIf="showCasesProcessed" style="padding: 30%; padding-bottom: 0; padding-top: 10%;
+ font-size: 30px; font-family: 'Roboto'; font-weight: 400;">
+    <!-- Count of Cases {{action}} : {{processedCases}} -->
+    {{processedCases}}
+    
+</div>

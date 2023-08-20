@@ -1,0 +1,40 @@
+<div>
+    <h2 class="mat-h2">Dashboard</h2>
+</div>
+<div class="box-container">
+    <div class="grid-3">
+        <div>
+            <h2 class="mat-h2">Current Modules</h2>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Search by Module Name</mat-label>
+                <input matInput (keyup)="filterProjectName($event)">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+        </div>
+        <div></div>
+    </div>
+    <div class="box-container">
+        <div [ngClass]="{'grid-6' : spliced_data.length > 6, 'grid-3' : spliced_data.length <= 6}">
+            <div *ngFor="let project of spliced_data">
+                <mat-card>
+                    <mat-card-content class="center">
+                       <div style="font-size: large;" (click)="sendProcessInfo(project)">{{project}}</div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+
+ 
+        </div>
+    </div>
+    <div class="center">
+        <mat-paginator 
+            [length]="curr_projects.length" 
+            (page)="pageChangeEvent($event)" 
+            [pageSize]="12"
+            [pageSizeOptions]="[6, 12, 18]" 
+            showFirstLastButtons=true>
+        </mat-paginator>
+    </div>
+</div>

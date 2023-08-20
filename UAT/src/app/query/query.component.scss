@@ -1,0 +1,119 @@
+
+// div h2 {
+// margin-left: 59px;
+// margin-top: 21px
+// }
+
+::ng-deep .mat-form-field-infix{
+  width:400px !important;
+}
+::ng-deep .mat-select-panel-wrap{
+  width:470px !important;
+ 
+}
+button.create-form {
+    background-color: green; 
+    color: white;
+  }
+
+.container-d{
+  width: 100%
+  }
+
+ .mat-card{
+  box-shadow: 1px 2px 10px 0 #000000 !important;
+  display: inline-block !important;
+  width:43%;
+  margin-left: 36px;
+  margin-top: 20px
+ 
+  }
+
+  .mat-card-subtitle{
+    font-weight: bold !important;
+    color: black;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .grid-6 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .example-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+  }
+  
+  .example-radio-button {
+    margin: 5px;
+  }
+
+  .fingerprint {
+    background: url('../../assets/capture.png');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: center;
+    height: 250px;
+    margin-bottom: 20px;
+  }
+
+  .img{
+    font-size: larger !important;
+  }
+
+  .noDataContainer{
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: x-large;
+    font-weight: 500;
+  }
+
+  .visible {
+    visibility: hidden;
+  }
+
+  .redirectPage {
+    text-align: right;
+    font-weight: 500;    
+    font-size: 17px;
+    margin-bottom: 16px;
+    margin-right: 20px;
+
+  }
+
+  .my-overlay {
+    left: 0 !important;
+    top: 0 !important;
+    z-index: 10000 !important;
+    height: 100% !important;
+    position: fixed !important;
+    cursor: pointer !important;
+    visibility: visible !important;
+    transition: visibility 0s, opacity 0.4s linear !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: wait !important;
+}
+
+
+.errorbgcolor {
+  background-color: #f1f18a;
+}
+.messagebgcolor {
+  background-color: white;
+}
+a { color: #3f51b5; } 

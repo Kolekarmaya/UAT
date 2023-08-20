@@ -1,0 +1,305 @@
+<!-- 
+<ng-container *ngIf="false">
+  <div class="box-container" style="margin-top: 20px;text-align: center;display: flex;justify-content: space-around;">
+    <ng-container>
+    <button mat-raised-button color="primary" type="button"  matTooltip="By Date" (click)="showHidePicker()">By Date</button>
+    </ng-container>
+    
+</div>
+
+<div class="section" style="margin-top: 12px;text-align: center;" *ngIf="showHide">
+    <mat-form-field appearance="fill">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="picker"  [max]="today" [(ngModel)]="startDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <div>
+        <button mat-raised-button color="primary" type="button"  matTooltip="By Date" (click)="getList()">Submit</button>
+        <div *ngIf="gs?.loader" style="position: absolute;top: 50%;left: 50%;transform: translate(-12px, -86px);">
+          <mat-spinner [diameter]="35" color="warn"></mat-spinner>
+        </div>
+    </div>
+
+  </div>
+</ng-container> -->
+
+<div class="box-container">
+  <div class="grid-2">
+      <h2 class="mat-h2">MIS Report</h2>
+      <div class="redirectPage" style="text-align: end;">                
+          <a [routerLink]="['/dashboard-page/']">
+              Redirect to process page 
+          </a>
+      </div>
+  </div>
+ 
+  <div>
+      <div style="width: -webkit-fill-available; position: absolute; z-index: 99999999999999999;"> 
+          <!-- <div class="grid-3"> -->
+             
+              <!-- <ng-container> -->
+                <!-- <div style="width:100%; display: flex; flex-direction: row;">
+                  <div style="width:50%; text-align:start">
+                    <button mat-raised-button color="primary" type="button"  
+                    matTooltip="By Date" (click)="showHidePicker()">By Date</button>
+                  </div>
+                  <div style="text-align:end" *ngIf="!noData">
+                    <button mat-raised-button matTooltip="Export policy data to excel sheet" color="primary" (click)="exportAsXLSX()">
+                      Export To Excel
+                    </button>
+                  </div>
+                </div> -->
+              
+
+                <!-- <button mat-raised-button color="primary" type="button"  matTooltip="Existing Product" (click)="gs.navigateToUrl('existing-product')">Existing Product</button>
+                <button mat-raised-button color="primary" type="button"  matTooltip="MIS" (click)="gs.navigateToUrl('product-mis')">MIS</button> -->
+              <!-- </ng-container> -->
+              <!-- <div>
+                <div class="section" style="margin-top: 12px;text-align: center;" *ngIf="showHide">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Date</mat-label>
+                    <input matInput [matDatepicker]="picker"  [max]="today" [(ngModel)]="startDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                  <div>
+                      <button mat-raised-button color="primary" type="button"  matTooltip="By Date" (click)="getList()">Submit</button>
+                      <div *ngIf="gs?.loader" style="position: absolute;top: 50%;left: 50%;transform: translate(-12px, -86px);">
+                        <mat-spinner [diameter]="35" color="warn"></mat-spinner>
+                      </div>
+                  </div>
+
+                </div>
+            
+              </div> -->
+  
+          <!-- </div> -->
+          <div *ngIf="displayMessage" style="padding: 30%; padding-top: 50px;padding-bottom: 0;">
+            <div class="customAlert"
+                    [ngClass]="(isError==true)?'errorbgcolor':'messagebgcolor'"
+                     style="
+                        height: 190px;
+                        border: groove;
+                        box-shadow: 5px 10px #888888;">
+                <div class="messageheader" style="padding: 30px;font-weight: 500;font-size: 25px;padding-bottom: 15px;
+                                                    background: #3f51b5;color: white;
+                                                    padding-top: 10px;margin-bottom: 15px">
+                    <!-- Information Message :   -->
+                    {{ messageType }}
+                </div>
+                <div class="messagebody" style="font-weight: 500;padding-left: 30px; padding-bottom: 10px;">
+                    <!-- server [ error_code : 1 ]  -->
+                    {{ message }}
+                </div>
+                <div class="messagebody" style="text-align: center;font-weight: 500;font-size: 20px;">
+                    <!-- No Data Available -->
+                     {{ messageDetails }}
+                </div>
+            
+                <div style="text-align: right;margin-top: 30px;padding-right: 30px;">
+                    <button style="width: 20%;height: 30px;" (click)="showMessage()">OK</button>
+                </div>
+            
+            </div>
+          </div>
+     
+      </div>
+  </div>
+
+  
+  <div style="margin-top: 15px;border: solid 1px #ccc;">
+    <div>
+      <div class = "header">
+        Generate Report For - 
+        <button mat-raised-button matTooltip="Between Dates" style="margin-left: 10px;" color="primary" (click)="handleClick('betweenDates')">Between Dates</button>
+        <button mat-raised-button matTooltip="Monthly" style="margin-left: 10px;" color="primary" (click)="handleClick('monthly')">Monthly</button>
+        <button mat-raised-button matTooltip="Ageing MIS" style="margin-left: 10px;" color="primary" (click)="handleClick('ageingMIS')">Ageing MIS</button>
+      </div>
+      <div style="display: flex;flex-direction: row;margin: 20px;">
+        
+  
+        <div *ngIf="betweenDatesClicked" class="box-container" style="border: solid 1px #212529;width: 100%;">
+          <div style="display: flex; justify-content: center;">
+            <div style="margin: 34px;font-weight: 500;">Enter date range :</div>
+            <div style="margin: 10px;">
+                <mat-form-field appDateFormat>
+                  <mat-label>Start Date</mat-label>
+                  <input matInput [matDatepicker]="dp2" (dateChange)="addStartDate( $event)"/>
+                  <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+                  <mat-datepicker #dp2 startView="multi-year"></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div style="margin: 10px;">
+                <mat-form-field appDateFormat>
+                  <mat-label>End Date</mat-label>
+                  <input matInput [matDatepicker]="dp3" (dateChange)="addEndDate( $event)"/>
+                  <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                  <mat-datepicker #dp3 startView="multi-year"></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div style="margin-top: 20px; margin-left: 20px;">
+                <button mat-raised-button color="primary" (click)="submitDateRange()">
+                    Submit                                       
+                </button>
+            </div>
+            <div *ngIf="exportMISDate && !noData" style="text-align: end;width:20%">
+              <button mat-raised-button matTooltip="Export policy data to excel sheet" color="primary" (click)="exportMISDataAsXLSX()">
+                Export To Excel
+              </button>
+            </div>
+          </div>
+  
+        </div>
+        <div *ngIf="monthlyClicked" class="box-container" style="border: solid 1px #212529;width: 100%;">
+          <div style="display: flex; justify-content: center;">
+            <!-- <div class = "monthMISHeader">
+              Select Month and Year :
+            </div> -->
+            <div style="margin: 34px;font-weight: 500;">Select Month and Year :</div>
+            <div style="margin: 10px;">
+              <mat-form-field appYearMonthFormat>
+                <mat-label>Month and Year</mat-label>
+                <input matInput [matDatepicker]="dp1" [formControl]="date" />
+                <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                <mat-datepicker
+                  #dp1
+                  startView="multi-year"
+                  (monthSelected)="setMonthAndYear($event, dp1)"
+                >
+                </mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div style="margin-top: 20px; margin-left: 20px;">
+              <button mat-raised-button color="primary" (click)="submitDateRange()">
+                  Submit                                       
+              </button>
+            </div>
+            <div *ngIf="exportMISDate && !noData" style="text-align: end;width:20%">
+              <button mat-raised-button matTooltip="Export policy data to excel sheet" color="primary" (click)="exportMISDataAsXLSX()">
+                Export To Excel
+              </button>
+            </div>
+            
+          </div>
+          
+  
+        </div>
+        <div *ngIf="ageingMISClicked" class="box-container" style="border: solid 1px #212529;width: 100%;">
+  
+        </div>
+        
+
+      </div>
+    </div>
+
+    <div>
+      <div *ngIf="!noData">
+        <div class = "misheader" style="display: flex; flex-direction: row;">
+          <div style="width: 90%;">
+            RT PAYOUT MIS DASHBOARD - {{this.misReportDate}}
+          </div>
+          <div style="text-align:end" *ngIf="!noData">
+            <button mat-raised-button matTooltip="Export policy data to excel sheet" color="primary" (click)="exportAsXLSX()">
+              Export To Excel
+            </button>
+          </div>
+        </div>
+        <div>
+          <mat-table table [dataSource]="mis_data"> 
+                              
+            <ng-container matColumnDef="PAYOUT_NAME">
+              <mat-header-cell *matHeaderCellDef> PAYOUT NAME </mat-header-cell>
+              <mat-cell *matCellDef="let element;"> {{element.PAYOUT_NAME}}</mat-cell>
+            </ng-container>
+            
+            <ng-container matColumnDef="TOTAL_CASES_YTD">
+              <mat-header-cell *matHeaderCellDef> TOTAL CASES YTD </mat-header-cell>
+              <mat-cell *matCellDef="let element;"> {{element.TOTAL_CASES_YTD}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="PASS_CASES_YTD">
+              <mat-header-cell *matHeaderCellDef> PASS CASES YTD </mat-header-cell>
+              <mat-cell *matCellDef="let element;" [style.background-color]="pink"> {{element.PASS_CASES_YTD}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="FAIL_CASES_YTD">
+              <mat-header-cell *matHeaderCellDef> FAIL CASES YTD </mat-header-cell>
+              <mat-cell *matCellDef="let element;" [style.background-color]="pink"> {{element.FAIL_CASES_YTD}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="WIP_YTD">
+              <mat-header-cell *matHeaderCellDef> WIP YTD </mat-header-cell>
+              <mat-cell *matCellDef="let element;" [style.background-color]="pink"> {{element.WIP_YTD}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="TOTAL_CASES_FTM">
+              <mat-header-cell *matHeaderCellDef> TOTAL CASES FTM </mat-header-cell>
+              <mat-cell *matCellDef="let element;" > {{element.TOTAL_CASES_FTM}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="PASS_CASES_FTM">
+              <mat-header-cell *matHeaderCellDef> PASS CASES FTM </mat-header-cell>
+              <mat-cell *matCellDef="let element;"> {{element.PASS_CASES_FTM}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="FAIL_CASES_FTM">
+              <mat-header-cell *matHeaderCellDef> FAIL CASES FTM </mat-header-cell>
+              <mat-cell *matCellDef="let element;"> {{element.FAIL_CASES_FTM}}</mat-cell>
+            </ng-container>
+            
+            <ng-container matColumnDef="WIP_FTM">
+              <mat-header-cell *matHeaderCellDef> WIP FTM </mat-header-cell>
+              <mat-cell *matCellDef="let element;"> {{element.WIP_FTM}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="TOTAL_CASES_FTD">
+              <mat-header-cell *matHeaderCellDef> TOTAL CASES FTD </mat-header-cell>
+              <mat-cell *matCellDef="let element;"> {{element.TOTAL_CASES_FTD}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="PASS_CASES_FTD">
+              <mat-header-cell *matHeaderCellDef> PASS CASES FTD </mat-header-cell>
+              <mat-cell *matCellDef="let element;"> {{element.PASS_CASES_FTD}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="FAIL_CASES_FTD">
+              <mat-header-cell *matHeaderCellDef> FAIL CASES FTD </mat-header-cell>
+              <mat-cell *matCellDef="let element;"> {{element.FAIL_CASES_FTD}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="WIP_FTD">
+              <mat-header-cell *matHeaderCellDef> WIP FTD </mat-header-cell>
+              <mat-cell *matCellDef="let element;"> {{element.WIP_FTD}}</mat-cell>
+            </ng-container>
+
+            
+            
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+        </div>
+      </div>
+      <div *ngIf= "noData" class="noDataContainer">
+        <span>
+            No Data Available.
+        </span>
+        <br/>
+        <span style = "font-size: small;">
+            <a [routerLink]="['/dashboard-page/']">
+                Redirect to process page to fetch more data.
+            </a>
+        </span>
+      </div> 
+    </div>
+  </div>
+  <!-- here data-->
+  
+
+</div>
+
+
+<div class="my-overlay1" *ngIf="showOverlay" style="display: flex; flex-direction: column;">
+<i class="fa fa-spinner fa-spin" aria-hidden="true" style="color: white;"></i>
+<span style="color:white; font-size: 30px;">Please wait...</span>
+</div>

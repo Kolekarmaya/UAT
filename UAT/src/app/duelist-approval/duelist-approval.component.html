@@ -1,0 +1,122 @@
+<div class="box-container">
+    <div style="display: flex;justify-content: space-between;">
+        <div class="redirectPage">                
+            <button mat-raised-button color="primary" type="button" (click)="gotoPage('dashboard-page')">Redirect to menu screen </button>
+        </div>
+
+    </div>
+
+    <h2 class="mat-h2">Dashboard</h2>
+    <div>
+        <div class="box-container">
+            <div class="grid-3">
+                <h2 class="mat-h3" style="margin-top: auto;">Policy List</h2>
+                <div *ngIf="!noData" [ngClass]="checkClass()">
+                    <mat-form-field>
+                        <mat-label>Search By Policy Details</mat-label>
+                        <input type="text" placeholder="Search By Policy Details" matInput (keyup)="keyupSearchPolicy($event.target.value)">
+                    </mat-form-field>
+                </div>
+                <div class="right" *ngIf="!noData">                 
+                    <button mat-raised-button matTooltip="Export policy data to excel sheet" color="primary" (click)="exportAsXLSX()">
+                        Export To Excel
+                    </button>
+                  
+                </div>
+            </div>
+
+            
+            <div *ngIf="!noData">
+                <mat-table #table [dataSource]="dataSource">
+                        <ng-container matColumnDef="POLICY_NO">
+                            <mat-header-cell *matHeaderCellDef> POLICY_NO </mat-header-cell>
+                            <mat-cell *matCellDef="let element;"> {{element.POLICY_NO}}</mat-cell>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="THREAD_ID">
+                            <mat-header-cell *matHeaderCellDef> THREAD_ID </mat-header-cell>
+                            <mat-cell *matCellDef="let element;"> {{element.WFTHREAD}}</mat-cell>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="AUDITED_NET_PAYABLE">
+                            <mat-header-cell *matHeaderCellDef> AUDITED_NET_PAYABLE </mat-header-cell>
+                            <mat-cell *matCellDef="let element;"> {{element.AUDITED_NET_PAYABLE | number:'3.2-4'}}</mat-cell>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="PQ_QC_FLAG">
+                            <mat-header-cell *matHeaderCellDef> PQ_QC_FLAG </mat-header-cell>
+                            <mat-cell *matCellDef="let element;"> 
+                                <mat-select [(ngModel)]= "element['PQ_QC_FLAG']"  
+                                            disabled
+                                            style="width: 50% !important;" 
+                                            placeholder="Select QC Flag" (selectionChange)="selectedQcFlagValue($event,element)">
+                                    <mat-option *ngFor="let qcFlag of qcFlagValues" [value]="qcFlag.value">
+                                        {{qcFlag.text}}
+                                    </mat-option>                      
+                                </mat-select> 
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="PQ_QC_REMARKS">
+                            <mat-header-cell *matHeaderCellDef> PQ_QC_REMARKS </mat-header-cell>
+                            <mat-cell *matCellDef="let element;"> 
+                                <mat-select [(ngModel)]= "element['PQ_QC_REMARKS']" disabled
+                                            style="width: 70% !important;"
+                                            placeholder="Select Remark" (selectionChange)="selectedQcRemarkValue($event)">
+                                    <mat-option *ngFor="let qcRemark of remarksValues" [value]="qcRemark.value">
+                                    {{qcRemark.text}}
+                                    </mat-option>                      
+                                </mat-select>
+                            </mat-cell>
+                        </ng-container>
+ <!-- "inputDisabled"  -->
+        
+                        <ng-container matColumnDef="EXPECTED">
+                            <mat-header-cell *matHeaderCellDef >  </mat-header-cell>
+                            <mat-cell *matCellDef="let element;" style="margin-right:20px ;"> 
+                                <mat-form-field>
+                                    <input type="text" placeholder="Expected" matInput [(ngModel)]= "element['EXPECTED']" 
+                                    disabled autocomplete="off">
+                                </mat-form-field>
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container *ngIf="!showAfterQCData" matColumnDef="actionsColumn">
+                            <mat-header-cell *matHeaderCellDef > Action </mat-header-cell>
+                            <mat-cell *matCellDef="let element;"> 
+                                <button mat-icon-button="" color="primary" disabled (click)="unableDisable(element)" *ngIf="this.routerState['processQcValue']=='PASS'">
+                                    Edit                                       
+                                </button>
+                                <button mat-icon-button="" color="primary" disabled (click)="getConfirmation(element)" *ngIf="this.routerState['processQcValue']=='FAIL'">
+                                    Submit                                       
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+            </div>    
+            <div *ngIf= "noData" class="noDataContainer">
+                <span>
+                    No Data Available.
+                </span>
+                <br/>
+                <span style = "font-size: small;">
+                    <a [routerLink]="['/dashboard-page/']">
+                        Redirect to process page to fetch more data.
+                    </a>
+                </span>
+            </div> 
+            <div *ngIf="noMatchFound" style="text-align: center;padding: 20px;font-weight: 500;">
+                <span>
+                    No match found
+                </span>
+            </div>        
+            <mat-paginator #paginator [pageSizeOptions]="[5,10,20,30,40,50]" showFirstLastButtons [pageSize]="10"></mat-paginator>
+        </div>
+    </div>
+</div>
+
+
+

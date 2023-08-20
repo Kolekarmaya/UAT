@@ -1,0 +1,58 @@
+<div class="box-container">
+    <div class="grid-2">
+        <h2 class="mat-h2">Claim Dashboard</h2>
+        <div class="redirectPage">                
+            <a [routerLink]="['/dashboard-page/']">
+                Redirect to process page 
+            </a>
+        </div>
+    </div>
+   
+    <div>
+        <div class="box-container"> 
+            <div class="grid-3">
+                <h2 class="mat-h3" style="margin-top: auto;">Claim Dashboard</h2>
+                <div *ngIf="!noData">
+                    <mat-form-field>
+                        <mat-label>Search </mat-label>
+                        <input type="text" placeholder="Search" matInput (keyup)="keyupSearchPolicy($event.target.value)">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            
+            <div *ngIf="!noData">
+                <mat-table #table [dataSource]="table_data">
+                    <ng-container matColumnDef="TOTAL_CLAIMS_FOR_RT">
+                        <mat-header-cell *matHeaderCellDef> TOTAL_CLAIMS_FOR_RT </mat-header-cell>
+                        <mat-cell *matCellDef="let element;"> {{element.TOTAL_CLAIMS_FOR_RT}}</mat-cell>
+                        <!-- <mat-cell *matCellDef="let element;"> {{element.total_claims_for_rt}}</mat-cell> -->
+                    </ng-container>
+                    <ng-container matColumnDef="UIN">
+                        <mat-header-cell *matHeaderCellDef> UIN </mat-header-cell>
+                        <mat-cell *matCellDef="let element;"> {{element.UIN}}</mat-cell>
+                        <!-- <mat-cell *matCellDef="let element;"> {{element.uin}}</mat-cell> -->
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+            </div>    
+            <div *ngIf= "noData" class="noDataContainer">
+                <span>
+                    No Data Available.
+                </span>
+                <br/>
+                <span style = "font-size: small;">
+                    <a [routerLink]="['/dashboard-page/']">
+                        Redirect to process page to fetch more data.
+                    </a>
+                </span>
+            </div> 
+            <div *ngIf="noMatchFound" style="text-align: center;padding: 20px;font-weight: 500;">
+                <span>
+                    No match found
+                </span>
+            </div>        
+        </div>
+    </div>
+</div>

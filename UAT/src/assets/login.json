@@ -1,0 +1,13 @@
+{
+    "response_code": 1,
+    "response_message": "data available",
+    "response_text": [
+        {
+        "userType": "Search_Filter",
+         "login": "maya", 
+         "password": "maya12"
+        }
+    ]
+    
+    
+  }

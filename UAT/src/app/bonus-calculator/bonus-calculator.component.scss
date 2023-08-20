@@ -1,0 +1,32 @@
+
+.container-fluid{
+    // background-image: url('../../../assets/register.jpg');
+    margin: 2px;
+    padding: 60px;
+}
+
+.card{
+    background-color:rgba(8, 8, 8, 0.5);
+        margin: 2px;
+        padding: 20px;
+        width: 350px;
+      
+        display: grid;
+        
+        border-radius: 10px;
+        box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+        transition: all 0.2s;
+      }
+      
+      .form-control{
+        width: 300px;
+      }
+
+      label{
+          color: aliceblue;
+          text-align: center;
+      }
+    #r1{
+      color: rgba(9, 105, 189, 0.863);
+    }
+   

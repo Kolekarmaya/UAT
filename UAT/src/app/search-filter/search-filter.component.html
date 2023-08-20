@@ -1,0 +1,169 @@
+<!--
+<div>
+    <h2 class="mat-h2">Dashboard</h2>
+</div>
+<div class="box-container">
+    <div class="grid-3">
+        <div>
+            <h2 class="mat-h2">Current Modules</h2>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Search by Module Name</mat-label>
+                <input matInput (keyup)="filterProjectName($event)">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+        </div>
+        <div></div>
+    </div>
+    <div class="box-container">
+        <div [ngClass]="{'grid-6' : spliced_data.length > 6, 'grid-3' : spliced_data.length <= 6}">
+            <div *ngFor="let project of spliced_data">
+                <mat-card>
+                    <mat-card-content class="center">                    
+                        <div style="font-size: large;" (click)="sendProjectInfo(project)">{{project}}</div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <div class="center">
+        <mat-paginator 
+            [length]="curr_projects.length" 
+            (page)="pageChangeEvent($event)" 
+            [pageSize]="12"
+            [pageSizeOptions]="[6, 12, 18]" 
+            showFirstLastButtons=true>
+        </mat-paginator>
+    </div>
+</div>
+-->
+
+<div class="" *ngIf="!showOverlay">
+    <!--start search button-->
+    <!-- <div color="primary" style="background: #3f51b5;text-align:right;padding-top: 10px;padding-right: 30px;"> 
+            <div *ngIf="!filterClick">
+                <button mat-raised-button color="primary" (click) = "SearchFilter()">
+                    <mat-icon>filter_tilt_shift</mat-icon>
+                    Search Filter
+                </button>      
+            </div> 
+            <div *ngIf="filterClick">
+                <button mat-raised-button color="primary" (click) = "clearFilter()">
+                    <mat-icon>clear</mat-icon>
+                    clear Filter
+                </button>      
+            </div> 
+        </div> -->
+
+    <mat-toolbar color="primary" style="display: flex;flex-direction: row;">
+
+        <mat-toolbar-row style="background:darkblue; margin:10px; height: 55px;">
+            <div *ngIf="PS">
+                <button mat-icon-button [matMenuTriggerFor]="payoutList" class="example-icon"
+                    aria-label="Example icon-button with menu icon">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span> PS Payouts </span>
+                <mat-menu #payoutList="matMenu">
+                    <ng-template matMenuContent>
+                        <button mat-menu-item (click)="submitFilterModule('FLC_Module')"> FLC Module </button>
+                        <button mat-menu-item (click)="submitFilterModule('Surrender_Module')"> Surrender Module
+                        </button>
+                        <button mat-menu-item (click)="submitFilterModule('LTR_Module')"> LTR Module </button>
+                        <button mat-menu-item (click)="submitFilterModule('Maturity_Module')"> Maturity Module</button>
+                        <button mat-menu-item (click)="submitFilterModule('Survival_Benefit')"> Survival Benefit </button>
+                        <button mat-menu-item (click)="submitFilterModule('Annuity_Payout')"> Annuity Payout</button>
+                        <button mat-menu-item (click)="submitFilterModule('Annuity_Payout_2W')"> Annuity Payout 2W</button>
+
+                    </ng-template>
+
+                </mat-menu>
+            </div>
+
+
+        </mat-toolbar-row>
+
+
+        <mat-toolbar-row style="background:darkblue; margin:10px; height: 55px;">
+            <div *ngIf="Claims">
+                <button mat-icon-button [matMenuTriggerFor]="payoutList2" class="example-icon"
+                    aria-label="Example icon-button with menu icon">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span> Claims Payouts </span>
+                <mat-menu #payoutList2="matMenu">
+                    <ng-template matMenuContent>
+                        <button mat-menu-item (click)="submitFilterModule('Death_Module')"> Death Module </button>
+                        <button mat-menu-item (click)="submitFilterModule('Annuity_Death_Module')">Annuity Death Module </button>
+                    </ng-template>
+                </mat-menu>
+            </div>
+        </mat-toolbar-row>
+
+    </mat-toolbar>
+</div>
+
+<div class="my-overlay1" *ngIf="showOverlay" style="display: flex; flex-direction: column;">
+    <i class="fa fa-spinner fa-spin" aria-hidden="true" style="color: white;"></i>
+    <span style="color:white; font-size: 30px;">Please wait...</span>
+</div>
+
+<div *ngIf="displayMessage" style="padding: 30%; padding-top: 50px;padding-bottom: 0;">
+    <div class="customAlert" [ngClass]="(isError==true)?'errorbgcolor':'messagebgcolor'" style="
+                    height: 190px;
+                    border: groove;
+                    box-shadow: 5px 10px #888888;">
+        <div class="messageheader" style="padding: 30px;font-weight: 500;font-size: 25px;padding-bottom: 15px;
+                                                background: #3f51b5;color: white;
+                                                padding-top: 10px;margin-bottom: 15px">
+            <!-- Information Message :   -->
+            {{ messageType }}
+        </div>
+        <div class="messagebody" style="font-weight: 500;padding-left: 30px; padding-bottom: 10px;">
+            <!-- server [ error_code : 1 ]  -->
+            {{ message }}
+        </div>
+        <div class="messagebody" style="text-align: center;font-weight: 500;font-size: 20px;">
+            <!-- No Data Available -->
+            {{ messageDetails }}
+        </div>
+
+        <div style="text-align: right;margin-top: 30px;padding-right: 30px;">
+            <button style="width: 20%;height: 30px;" (click)="showMessage()">OK</button>
+        </div>
+
+    </div>
+</div>
+<ng-template #dateDialog>
+    <!-- <h1 mat-dialog-title>Dialog with elements</h1> -->
+    <div mat-dialog-content>
+        <div>
+            <div style="display: flex; flex-direction: row; text-align: center;">
+                <div style="margin: 34px;font-weight: 500;">Enter date range </div>
+                <div style="margin: 10px;">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select Start Date</mat-label>
+                        <input matInput [matDatepicker]="picker1" (dateChange)="addStartDate( $event)">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div style="margin: 10px;">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select End Date</mat-label>
+                        <input matInput [matDatepicker]="picker2" (dateChange)="addEndDate( $event)">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div style="margin-top: 20px; margin-left: 20px;">
+                    <button mat-raised-button color="primary" (click)="showDateTime()">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>

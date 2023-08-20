@@ -1,0 +1,358 @@
+
+
+<div class="" *ngIf="!showOverlay">
+    <mat-toolbar color="primary" style="display: flex;flex-direction: row;">
+        <mat-toolbar-row style="background:darkblue; margin:10px; height: 55px;">
+            <div>
+                <button mat-icon-button [matMenuTriggerFor]="payoutList" class="example-icon"
+                    aria-label="Example icon-button with menu icon">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span> PS Payouts </span>
+                <mat-menu #payoutList="matMenu">
+                    <ng-template matMenuContent>
+                        <button mat-menu-item (mouseenter)="menuenter('NON_ULIP_FLC')" [matMenuTriggerFor]="payout"> NON
+                            ULIP FLC </button>
+                        <button mat-menu-item (mouseenter)="menuenter('ULIP_FLC')" [matMenuTriggerFor]="payout"> ULIP
+                            FLC </button>
+                        <button mat-menu-item [matMenuTriggerFor]="ulip_surrender_sub"> ULIP Surrender </button>
+                        <button mat-menu-item [matMenuTriggerFor]="non_ulip_surrender_sub"> Non ULIP Surrender </button>
+                        <button mat-menu-item [matMenuTriggerFor]="ltr_sub"> LTR </button>
+                        <!-- <button mat-menu-item (mouseenter)="menuenter('LTR')" [matMenuTriggerFor]="payout"> LTR </button> -->
+
+                        <!-- <button mat-menu-item (mouseenter)="menuenter('STAMP_DUTY_NON_ULIP')" [matMenuTriggerFor]="stampDutyPayout" > STAMP DUTY </button> -->
+                        <button mat-menu-item (mouseenter)="menuenter('STAMP_DUTY_NON_ULIP')"
+                            [matMenuTriggerFor]="payout_2"> STAMP DUTY NON-ULIP </button>
+                        <button mat-menu-item (mouseenter)="menuenter('STAMP_DUTY_ULIP')"
+                            [matMenuTriggerFor]="payout_2"> STAMP DUTY ULIP</button>
+                    </ng-template>
+                </mat-menu>
+            </div>
+            <mat-menu #ulip_surrender_sub="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_SURRENDER',1)"
+                        [matMenuTriggerFor]="payout">Base Surrender</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_SURRENDER',2)"
+                        [matMenuTriggerFor]="payout">1M Surrender</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_SURRENDER',3)"
+                        [matMenuTriggerFor]="payout">Lock-In-Surrender</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_SURRENDER',4)"
+                        [matMenuTriggerFor]="payout">Lock-In-Exception</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_SURRENDER',5)"
+                        [matMenuTriggerFor]="payout">Surrender CSL</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_SURRENDER',6)"
+                        [matMenuTriggerFor]="payout">Pre-check</button>
+ <!-- ashwini ULIP_SURRENDER-- Pre-check-->
+                </ng-template>
+            </mat-menu>
+            <mat-menu #non_ulip_surrender_sub="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_SURRENDER',1)"
+                        [matMenuTriggerFor]="payout">Base Surrender</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_SURRENDER',2)"
+                        [matMenuTriggerFor]="payout">VIP and Pension Surrender</button>
+                        <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_SURRENDER',3)"
+                        [matMenuTriggerFor]="payout">VIP and Pension Precheck</button>
+                        <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_SURRENDER',4)"
+                        [matMenuTriggerFor]="payout">Surrender_2W</button>
+                </ng-template>
+                <!-- 2W_Surrender add module 10-4-23  change name 5-10-23 Surrender_2W-->
+                
+            </mat-menu>
+            <mat-menu #ltr_sub="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('LTR',1)"[matMenuTriggerFor]="payout">Base</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('LTR',2)" [matMenuTriggerFor]="payout">VIP</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('LTR',3)"[matMenuTriggerFor]="payout">Precheck</button>
+                </ng-template>
+            </mat-menu>
+            <!-- <mat-menu #stampDutyPayout="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (mouseenter)="menuenter('STAMP_DUTY_NON_ULIP')" [matMenuTriggerFor]="payout" > NON-ULIP </button>
+                    <button mat-menu-item (mouseenter)="menuenter('STAMP_DUTY_NON_ULIP')" [matMenuTriggerFor]="payout" > ULIP </button>
+                </ng-template>
+            </mat-menu>        -->
+            <mat-menu #payout="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_INPUT')"> PROCESS_INPUT </button>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_LOGIC')"> PROCESS_OUTPUT </button>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_OUTPUT')"> PROCESS_QC </button>
+                    <button mat-menu-item (click)="selectedPayout('VIEWQCDATA')"> VIEW QC DATA </button>
+                </ng-template>
+            </mat-menu>
+            <mat-menu #payout_2="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_INPUT')"> PROCESS_INPUT </button>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_LOGIC')"> PROCESS_OUTPUT </button>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_OUTPUT')"> PROCESS_QC </button>
+                </ng-template>
+            </mat-menu>
+
+        </mat-toolbar-row>
+
+        <mat-toolbar-row style="background:darkblue; margin:10px; height: 55px;">
+            <div>
+                <button mat-icon-button [matMenuTriggerFor]="payoutList2" class="example-icon"
+                    aria-label="Example icon-button with menu icon">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span> Claims Payouts </span>
+                <mat-menu #payoutList2="matMenu">
+                    <ng-template matMenuContent>
+                        <!-- <button mat-menu-item (mouseenter)="menuenter('NON_ULIP_DEATH_CLAIM')" [matMenuTriggerFor]="subPayout"> Non ULIP Death Claim </button> -->
+                        <button mat-menu-item [matMenuTriggerFor]="subPayout"> Non ULIP Death Claim </button>
+                        <button mat-menu-item [matMenuTriggerFor]="subPayoutUlipDeath"> ULIP Death claim </button>
+                        <!-- <button mat-menu-item (mouseenter)="menuenter('ULIP_MATURITY_CLAIM')" [matMenuTriggerFor]="bulkPayout"> ULIP Maturity Claim </button> -->
+                        <button mat-menu-item [matMenuTriggerFor]="ulip_base"> ULIP Maturity </button>
+                        <button mat-menu-item (mouseenter)="menuenter('NON_ULIP_MATURITY_CLAIM')"
+                            [matMenuTriggerFor]="bulkPayout"> Non ULIP Maturity Claim </button>
+                        <button mat-menu-item (mouseenter)="menuenter('NU_Pension & VIP_Maturity')"
+                            [matMenuTriggerFor]="payout"> NU_Pension & VIP_Maturity </button>
+                        <button mat-menu-item [matMenuTriggerFor]="sbPayout"> Survival Benefit (SB) </button>
+                        <button mat-menu-item [matMenuTriggerFor]="annuityPayout"> Annuity </button>
+                        <button mat-menu-item (mouseenter)="menuenter('ANNUITY_DEATH_CLAIM')"
+                            [matMenuTriggerFor]="payout"> Annuity Death Claim </button>
+                        <button mat-menu-item [matMenuTriggerFor]="subPayout2"> Non Ulip Death Repudiation </button>
+                        <button mat-menu-item (mouseenter)="menuenter('ULIP_DEATH_REPUDIATION')"
+                            [matMenuTriggerFor]="payout"> Ulip Death Repudiation </button>
+                        <button mat-menu-item [matMenuTriggerFor]="nonUlipPreCheckingSubModule"> Non-Ulip PPA
+                            Pre-Checking </button>
+                        <button mat-menu-item [matMenuTriggerFor]="ulipPreCheckingSubModule"> Ulip PPA Pre-Checking
+                        </button>
+                        <button mat-menu-item [matMenuTriggerFor]="payout_4"
+                            (mouseenter)="menuenter('ULIP_PRE_CHECKING')"> Ulip Pre-Checking </button>
+                        <button mat-menu-item (mouseenter)="menuenter('INDIGO_DEATH_CLAIMS')"
+                            [matMenuTriggerFor]="payout"> Indigo Death Claims </button>
+                        <button mat-menu-item (mouseenter)="menuenter('INDIGO_MATURITY_CLAIMS')"
+                            [matMenuTriggerFor]="payout"> Indigo Maturity Claims </button>
+                        <button mat-menu-item (mouseenter)="menuenter('RT_GROUP_DEATH_CLAIMS')"
+                            [matMenuTriggerFor]="payout"> RT_Group Death Claims </button>
+                    </ng-template>
+                </mat-menu>
+            </div>
+
+            <mat-menu #sbPayout="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('SURVIVAL_BENEFIT',1)"
+                        [matMenuTriggerFor]="bulkPayout">SB Payout</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('SURVIVAL_BENEFIT',2)"
+                        [matMenuTriggerFor]="bulkPayout">SB Duelist</button>
+                </ng-template>
+            </mat-menu>
+            <mat-menu #annuityPayout="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ANNUITY_PAYOUT',1)"
+                        [matMenuTriggerFor]="bulkPayout">Annuity Payout</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ANNUITY_PAYOUT',2)"
+                        [matMenuTriggerFor]="bulkPayout">Annuity Duelist</button>
+                    <!-- <button mat-menu-item (mouseenter)="subMenuEnter('ANNUITY_PAYOUT',3)" [matMenuTriggerFor]="bulkPayout">2R</button>    -->
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ANNUITY_PAYOUT',3)"
+                        [matMenuTriggerFor]="annpayout_2W">2W</button>
+                </ng-template>
+            </mat-menu>
+            <mat-menu #ulip_base="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_MATURITY',1)"
+                        [matMenuTriggerFor]="payout">ULIP Base Maturity</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_MATURITY',2)"
+                        [matMenuTriggerFor]="onem_menu">1M Maturity</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_MATURITY',3)"
+                        [matMenuTriggerFor]="payout">ULIP Maturity Base Precheck</button>
+  <!-- priyanka  ULIP Maturity Base Precheck -->
+                        <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_MATURITY',4)"
+                        [matMenuTriggerFor]="payout">VIP Pension Maturity Precheck</button>
+  <!--rohit add VIP Pension Maturity Precheck 22-2-23 -->
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_MATURITY',5)"
+                        [matMenuTriggerFor]="Inputonly">1M Precheck</button>
+  <!-- rohit add 1M Maturity -->
+                </ng-template>
+            </mat-menu>
+            <mat-menu #nonUlipPreCheckingSubModule="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_PRE_CHECKING',1)"
+                        [matMenuTriggerFor]="payout_4">56,07,36 Products</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_PRE_CHECKING',2)"
+                        [matMenuTriggerFor]="payout_4">Product 1E</button>
+                </ng-template>
+            </mat-menu>
+            <mat-menu #ulipPreCheckingSubModule="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_PRE_CHECKING_1M',1)"
+                        [matMenuTriggerFor]="payout_4">Product 1M</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_PRE_CHECKING_1M',2)"
+                        [matMenuTriggerFor]="payout_4">1M Maturity</button>
+
+                </ng-template>
+            </mat-menu>
+
+            <mat-menu #payout_4="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_INPUT')"> PROCESS_INPUT </button>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_LOGIC')"> PROCESS_OUTPUT </button>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_OUTPUT')"> PROCESS_QC </button>
+                </ng-template>
+            </mat-menu>
+            <mat-menu #annpayout_2W="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_INPUT')"> PROCESS_INPUT </button>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_LOGIC')"> PROCESS OUTPUT </button>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_OUTPUT')"> PROCESS QC </button>
+                    <button mat-menu-item (click)="selectedPayout('VIEWQCDATA')"> VIEW QC DATA </button>
+                </ng-template>
+            </mat-menu>
+            <mat-menu #onem_menu="matMenu">
+                <ng-template matMenuContent>
+                    <!-- <button mat-menu-item  (click)="selectedPayout('PROCESS_INPUT')"> PROCESS_INPUT </button> -->
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_LOGIC')"> PROCESS_OUTPUT </button>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_OUTPUT')"> PROCESS_QC </button>
+                    <button mat-menu-item (click)="selectedPayout('VIEWQCDATA')"> VIEW QC DATA </button>
+
+                </ng-template>
+            </mat-menu>
+            <mat-menu #Inputonly="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item  (click)="selectedPayout('PROCESS_INPUT')"> PROCESS_INPUT </button>
+                    <!-- <button mat-menu-item (click)="selectedPayout('PROCESS_LOGIC')"> PROCESS_OUTPUT </button> -->
+                    <!-- <button mat-menu-item (click)="selectedPayout('PROCESS_OUTPUT')"> PROCESS_QC </button> -->
+                    <!-- <button mat-menu-item (click)="selectedPayout('VIEWQCDATA')"> VIEW QC DATA </button> -->
+
+                </ng-template>
+            </mat-menu>
+            <mat-menu #subPayout2="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_DEATH_REPUDIATION',1)"
+                        [matMenuTriggerFor]="payout">Non Ulip Death - Non Term products</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_DEATH_REPUDIATION',2)"
+                        [matMenuTriggerFor]="payout">Pending death claims: Term products</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_DEATH_REPUDIATION',3)"
+                        [matMenuTriggerFor]="payout">45 & 47 : Loan decreasing cover</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_DEATH_REPUDIATION',4)"
+                        [matMenuTriggerFor]="payout">VIP and Pension Death Claim Products</button>
+                    <!-- <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_DEATH_REPUDIATION',5)" [matMenuTriggerFor]="payout">56,07,36 Products</button>                     -->
+                    <!-- <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_DEATH_REPUDIATION',6)" [matMenuTriggerFor]="payout">Product 36</button>                    
+                    <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_DEATH_REPUDIATION',7)" [matMenuTriggerFor]="payout">Product 56</button>                     -->
+                </ng-template>
+            </mat-menu>
+            <mat-menu #subPayout="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_DEATH_CLAIM',1)"
+                        [matMenuTriggerFor]="payout">Non Ulip Death - Non Term products</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_DEATH_CLAIM',2)"
+                        [matMenuTriggerFor]="payout">Pending death claims: Term products</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_DEATH_CLAIM',3)"
+                        [matMenuTriggerFor]="payout">45 & 47 : Loan decreasing cover</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_DEATH_CLAIM',4)"
+                        [matMenuTriggerFor]="payout">VIP and Pension Death Claim Products</button>
+                    <!-- <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_DEATH_CLAIM',5)" [matMenuTriggerFor]="payout">56,07,36 Products</button>                     -->
+                    <!-- <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_DEATH_CLAIM',6)" [matMenuTriggerFor]="payout">Product 36</button>                    
+                    <button mat-menu-item (mouseenter)="subMenuEnter('NON_ULIP_DEATH_CLAIM',7)" [matMenuTriggerFor]="payout">Product 56</button>                     -->
+                </ng-template>
+            </mat-menu>
+            <mat-menu #subPayoutUlipDeath="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_DEATH_CLAIM',1)"
+                        [matMenuTriggerFor]="payout">1M</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_DEATH_CLAIM',2)"
+                        [matMenuTriggerFor]="payout">1H</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_DEATH_CLAIM',3)"
+                        [matMenuTriggerFor]="payout">51</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_DEATH_CLAIM',4)"
+                        [matMenuTriggerFor]="payout">Other/basic</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_DEATH_CLAIM',5)"
+                        [matMenuTriggerFor]="payout">Ulip Pension</button>
+                    <button mat-menu-item (mouseenter)="subMenuEnter('ULIP_DEATH_CLAIM',6)"
+                        [matMenuTriggerFor]="payout">1M_Death_CSL</button>
+
+                </ng-template>
+            </mat-menu>
+            <mat-menu #payout="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_INPUT')"> PROCESS_INPUT </button>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_LOGIC')"> PROCESS_OUTPUT </button>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_OUTPUT')"> PROCESS_QC </button>
+                    <button mat-menu-item (click)="selectedPayout('VIEWQCDATA')"> VIEW QC DATA </button>
+                </ng-template>
+            </mat-menu>
+            <mat-menu #bulkPayout="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_INPUT',undefined,dateDialog)"> PROCESS_INPUT
+                    </button>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_LOGIC')"> PROCESS_OUTPUT </button>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_OUTPUT')"> PROCESS_QC </button>
+                    <button mat-menu-item (click)="selectedPayout('VIEWQCDATA')"> VIEW QC DATA </button>
+                </ng-template>
+            </mat-menu>
+            <mat-menu #bulkSubMenu="matMenu">
+                <ng-template matMenuContent>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_OUTPUT','PASS')"> PASS </button>
+                    <button mat-menu-item (click)="selectedPayout('PROCESS_OUTPUT','FAIL')"> FAIL </button>
+                </ng-template>
+            </mat-menu>
+        </mat-toolbar-row>
+        
+    </mat-toolbar>
+</div>
+
+<div class="my-overlay1" *ngIf="showOverlay" style="display: flex; flex-direction: column;">
+    <i class="fa fa-spinner fa-spin" aria-hidden="true" style="color: white;"></i>
+    <span style="color:white; font-size: 30px;">Please wait...</span>
+</div>
+
+<div *ngIf="displayMessage" style="padding: 30%; padding-top: 50px;padding-bottom: 0;">
+    <div class="customAlert" [ngClass]="(isError==true)?'errorbgcolor':'messagebgcolor'" style="
+                height: 190px;
+                border: groove;
+                box-shadow: 5px 10px #888888;">
+        <div class="messageheader" style="padding: 30px;font-weight: 500;font-size: 25px;padding-bottom: 15px;
+                                            background: #3f51b5;color: white;
+                                            padding-top: 10px;margin-bottom: 15px">
+            <!-- Information Message :   -->
+            {{ messageType }}
+        </div>
+        <div class="messagebody" style="font-weight: 500;padding-left: 30px; padding-bottom: 10px;">
+            <!-- server [ error_code : 1 ]  -->
+            {{ message }}
+        </div>
+        <div class="messagebody" style="text-align: center;font-weight: 500;font-size: 20px;">
+            <!-- No Data Available -->
+            {{ messageDetails }}
+        </div>
+
+        <div style="text-align: right;margin-top: 30px;padding-right: 30px;">
+            <button style="width: 20%;height: 30px;" (click)="showMessage()">OK</button>
+        </div>
+
+    </div>
+</div>
+<ng-template #dateDialog>
+    <!-- <h1 mat-dialog-title>Dialog with elements</h1> -->
+    <div mat-dialog-content>
+        <div>
+            <div style="display: flex; flex-direction: row; text-align: center;">
+                <div style="margin: 34px;font-weight: 500;">Enter date range </div>
+                <div style="margin: 10px;">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select Start Date</mat-label>
+                        <input matInput [matDatepicker]="picker1" (dateChange)="addStartDate( $event)">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div style="margin: 10px;">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select End Date</mat-label>
+                        <input matInput [matDatepicker]="picker2" (dateChange)="addEndDate( $event)">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div style="margin-top: 20px; margin-left: 20px;">
+                    <button mat-raised-button color="primary" (click)="showDateTime()">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>

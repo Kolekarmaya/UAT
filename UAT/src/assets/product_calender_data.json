@@ -1,0 +1,38 @@
+[
+ {
+  "PLAN_ID": "1",
+  "DEPARTMENT": "Group Ops",
+  "MODULE": "1",
+  "SUB_MODULE": "1",
+  "MODULE_REQUIREMENT_DATE": "20/12/2021",
+  "MODULE_STATUS": "UAT",
+  "STAKEHOLDER_NAME": "DXC",
+  "MODULE_ROLLED_OUT_DATE": "21/12/2021",
+  "WHIZIBLE_ID": "1",
+  "REMARKS": "a",
+  "PRODUCT_NAME": "abc",
+  "UIN": "111N092V03",
+  "PRODUCT_TYPE": "Ulip",
+  "PRODUCT_CODE": "swagat",
+  "DATE_OF_LAUNCH": "30/12/2021",
+  "SERIES_NO": "1J"
+},
+{
+  "PLAN_ID": "1",
+  "DEPARTMENT": "Group Ops",
+  "MODULE": "1",
+  "SUB_MODULE": "1",
+  "MODULE_REQUIREMENT_DATE": "22/12/2022",
+  "MODULE_STATUS": "UAT",
+  "STAKEHOLDER_NAME": "DXC",
+  "MODULE_ROLLED_OUT_DATE": "23/12/2018",
+  "WHIZIBLE_ID": "1",
+  "REMARKS": "a",
+  "PRODUCT_NAME": "abc",
+  "UIN": "111N092V03",
+  "PRODUCT_TYPE": "Ulip",
+  "PRODUCT_CODE": "swagat",
+  "DATE_OF_LAUNCH": "30/12/2018",
+  "SERIES_NO": "1J"
+}
+  ]

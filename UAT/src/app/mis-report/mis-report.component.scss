@@ -1,0 +1,155 @@
+.my-overlay i.fa.fa-spinner.fa-spin, .spinner-big {
+    font-size: 100px !important;
+}
+
+.my-overlay1 
+{
+    left: 0 !important;
+    top: 0 !important;
+    z-index: 10000 !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: fixed !important;
+    background-color: rgba(0,0,0,0.9) !important;
+    cursor: pointer !important;
+    visibility: visible !important;
+    transition: visibility 0s, opacity 0.4s linear !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: wait !important;
+}
+
+
+.errorbgcolor {
+  background-color: #f1f18a;
+}
+.messagebgcolor {
+  background-color: white;
+}
+
+.display_none{
+  display: none;
+}
+
+.mat-cell:first-of-type, mat-footer-cell:first-of-type, mat-header-cell:first-of-type {
+  // padding-right: 24px;
+  min-width: 230px;
+  padding-left: 0px;
+}
+.mat-cell:last-of-type, mat-footer-cell:last-of-type, mat-header-cell:last-of-type {
+  padding-right: 0px;
+}
+.mat-cell, mat-footer-cell, mat-header-cell {
+  text-align: center !important;
+  font-size: 17px;
+}
+.mat-column-PAYOUT_NAME {
+  min-width: 154px;
+
+}
+.mat-column-TOTAL_CASES_YTD,
+.mat-column-PASS_CASES_YTD,
+.mat-column-FAIL_CASES_YTD,
+.mat-column-WIP_YTD
+{
+  background-color: antiquewhite;
+}
+
+.mat-column-TOTAL_CASES_FTM,
+.mat-column-PASS_CASES_FTM,
+.mat-column-FAIL_CASES_FTM,
+.mat-column-WIP_FTM
+{
+  background-color: #D5F5E3;
+}
+
+.mat-column-TOTAL_CASES_FTD,
+.mat-column-PASS_CASES_FTD,
+.mat-column-FAIL_CASES_FTD,
+.mat-column-WIP_FTD
+{
+  background-color: #D6EAF8;
+}
+
+.mat-column-PAYOUT_NAME,
+.mat-column-TOTAL_CASES_YTD, .mat-column-PASS_CASES_YTD,
+.mat-column-FAIL_CASES_YTD,
+.mat-column-WIP_YTD,
+.mat-column-TOTAL_CASES_FTM,
+.mat-column-PASS_CASES_FTM,
+.mat-column-FAIL_CASES_FTM,
+.mat-column-WIP_FTM,
+.mat-column-TOTAL_CASES_FTD,
+.mat-column-PASS_CASES_FTD,
+.mat-column-FAIL_CASES_FTD,
+.mat-column-WIP_FTD
+{
+  // padding: 15px;
+  font-size: 16px;
+  // font-size: 20px;
+  // min-height: 90px;
+  border: 1px solid currentColor;
+  // padding-bottom: 0px;
+  
+}
+
+.mat-cell, mat-footer-cell, mat-header-cell {
+  // display: block;
+  justify-content: center;
+}
+
+.mat-footer-row, mat-header-row, mat-row{
+  border-bottom-width: 0px !important;
+}
+
+.mat-header-cell {
+  font-weight: 700;
+}
+
+.mat-header-row {
+  min-height: 75px;
+}
+
+.misheader {
+  font-weight: 700;
+  font-size: 30px;
+  text-align: center;
+  padding: 10px;
+  color: #757575;
+  /* border: 1px; */
+  border: 1px solid currentColor;
+  padding-bottom: 15px;
+
+}
+
+.header {
+  font-size: 20px;
+  font-weight: 600;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  padding-left: 20px;
+}
+
+.monthMIS {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 40px;
+
+}
+
+.monthMISHeader{
+    font-size: 18px;
+    font-weight: 500;
+    padding-right: 20px;
+}
+
+
+.noDataContainer{
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  font-size: x-large;
+  font-weight: 500;
+}

@@ -1,0 +1,105 @@
+mat-expansion-panel {
+  min-width: 500px;
+  max-width: 500px;
+  margin: auto;
+  top: 10px;
+  position: relative;
+}
+
+.field {
+  mat-form-field{
+    width: 100%;
+  }
+}
+
+.button{
+  text-align: right;
+  font-size: 12px !important;
+  color:#3f51b5
+}
+
+.labelFont{
+  font-size: 15px;
+  font-weight: 500;
+}
+
+
+.my-overlay {
+  left: 0 !important;
+  top: 0 !important;
+  z-index: 10000 !important;
+  height: 100% !important;
+  position: fixed !important;
+  cursor: pointer !important;
+  visibility: visible !important;
+  transition: visibility 0s, opacity 0.4s linear !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: wait !important;
+}
+
+
+.errorbgcolor {
+background-color: #f1f18a;
+}
+.messagebgcolor {
+background-color: white;
+}
+
+::ng-deep .mat-form-field-infix{
+  background-color: white;
+}
+thead th { position: sticky; top: 0; font-weight: 400;}
+::ng-deep .mat-form-field-wrapper .mat-form-field-flex {
+padding: 0 !important;
+}
+
+.parent {
+display: grid;
+grid-template-columns: repeat(11, 1fr);
+// grid-template-rows: 1fr;
+grid-column-gap: 10px;
+grid-row-gap: 10px;
+// border-top: 2px solid gray;
+}
+
+.upper_grid{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-gap: 10px;
+}
+
+.css-flex{
+  display: flex; 
+  justify-content: space-between; 
+  min-width: 1440px;
+  width: 100%;
+}
+
+.css-col{
+  width: calc(94% / 11);
+  display: flex;
+  align-items: center;
+  // margin: 0 5px;
+  justify-content: flex-start;
+}
+
+.mat-form-field{
+  width: 100%;
+}
+
+.css-action{
+  width: 4%;
+  display: flex;
+  align-items: center;
+}
+.text_danger{
+  color: red;
+}
+
+.input_style{
+  height: 42px;
+  width: 180px;
+  background-color: white;
+}

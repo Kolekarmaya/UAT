@@ -1,0 +1,141 @@
+<mat-expansion-panel expanded="true" hideToggle="true" disabled="true">
+  <mat-expansion-panel-header style="padding-bottom: 10px;">
+    <mat-panel-title style="font-weight: 600;color: #3f51b5; font-size: 23px">
+      Log In
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <form [formGroup]="signInForm" (keyup.enter)="submit()" autocomplete="off">
+    <div class="field">
+		<mat-form-field class="labelFont">
+		  <mat-label >Select type of user</mat-label>
+		  <mat-select [(value)]="selected" formControlName="user_type" required>
+			<mat-option>None</mat-option>
+			<mat-option value="Developer">Approver</mat-option>			
+			<mat-option value="Tester">Checker</mat-option>
+      <mat-option value="Group_user">Group User</mat-option>			
+      <!-- <mat-option value="Developer">Approver</mat-option>			 -->
+			<mat-option value="Product Calender">Product Calender</mat-option>
+      <mat-option value="Search_Filter">Search Filter</mat-option>
+      <mat-option value="RT_Flag_Update">RT Flag Update</mat-option>
+		  </mat-select>
+		</mat-form-field>
+    </div>
+    <div class="field">
+      <mat-form-field class="labelFont">        
+        <input matInput  type="text" name="user_id" formControlName="user_id" placeholder="Enter user id" autocomplete="off"  required>
+      </mat-form-field>
+    </div>
+    <div class="field">
+      <mat-form-field class="labelFont">
+        <input matInput appBlockCopyPaste type="password" formControlName="password" name="password"
+          placeholder="Enter Password" autocomplete="off" required>
+      </mat-form-field>
+    </div>    
+  </form>
+  <div *ngIf="account_locked"  style="margin-bottom: 20px; color: red;">
+		{{errorMessage}}
+	</div>
+  <div class="button">
+    <!--
+    <button style="margin-right: 10px;" [disabled]="!canSubmit()" (click)="resetPassword()" mat-raised-button color="primary">Change Password
+    </button>
+    -->
+    <button [disabled]="!canSubmit() || account_locked" (click)="submit()" mat-raised-button color="primary" style="font-size: 18px;">Log In
+    </button>
+  </div>
+  <!-- <mat-action-row>
+    <div>
+      <button mat-button color="primary" (click)="openDialogWithTemplateRef(forgotPassword)">Forgot Password?</button>
+    </div>
+  </mat-action-row> -->
+</mat-expansion-panel>
+
+<div *ngIf="displayMessage" class="my-overlay" style="padding: 30%; padding-top: 50px;padding-bottom: 0;">
+  <div class="customAlert"
+          [ngClass]="(isError==true)?'errorbgcolor':'messagebgcolor'"
+           style="
+              height: 190px;
+              border: groove;
+              box-shadow: 5px 10px #888888;width: 500px;">
+      <div class="messageheader" style="padding: 30px;font-weight: 500;font-size: 25px;padding-bottom: 15px;
+                                           background: #3f51b5;color: white;
+                                           padding-top: 10px;margin-bottom: 15px">
+          <!-- Information Message :  -->
+          {{ messageType }}
+      </div>
+      <div class="messagebody" style="text-align: center;font-weight: 500;font-size: 20px;">
+          <!-- No Data Available -->
+          {{ messageDetails }}
+      </div>
+  
+      <div style="text-align: right;margin-top: 30px;padding-right: 30px;">
+          <button style="width: 20%;height: 30px;margin-right: 10px;" (click)="showAlert('OK')">OK</button>
+      </div>
+  
+  </div>
+</div>
+
+
+<div *ngIf="openConfirmationBox" class="my-overlay" style="padding: 30%; padding-top: 50px;padding-bottom: 0;">
+  <div class="customAlert"
+          [ngClass]="(isError==true)?'errorbgcolor':'messagebgcolor'"
+           style="
+              height: 190px;
+              border: groove;              
+              box-shadow: 5px 10px #888888;width: 500px;">
+      <div class="messagebody" style="font-weight: 500;font-size:20px;padding-left: 20px; padding-bottom: 10px;padding-top:50px;padding-right: 20px;">
+          {{messagePopup}}
+      </div>
+  
+      <div style="text-align: right;margin-top: 30px;padding-right: 30px;">
+          <button style="width: 20%;height: 30px;margin-right: 10px;" (click)="showMessage('OK')">OK</button>
+          <button style="width: 20%;height: 30px;margin-right: 10px;" (click)="showMessage('CANCEL')">Cancel</button>
+      </div>  
+  </div>
+</div>
+
+<!-- <app-message-dialog #messageDlg></app-message-dialog> -->
+<!-- 
+<ng-template #forgotPassword>
+  <h2 matDialogTitle>Forgot Password</h2>
+  <mat-dialog-content>
+    <div class="right" style="color:blue;" *ngIf="forgot_password_flag == 'otp'">
+      **OTP has been send to entered email
+    </div>
+    <div>
+      <div class="field">
+        <mat-form-field *ngIf="forgot_password_flag == 'email'">
+          <input matInput type="email" placeholder="Enter User Email">
+        </mat-form-field>
+      </div>
+      <div class="field">
+        <mat-form-field *ngIf="forgot_password_flag == 'otp'">
+          <input matInput type="text" placeholder="Enter OTP">
+        </mat-form-field>
+      </div>
+      <div class="field">
+        <mat-form-field *ngIf="forgot_password_flag == 'pass'">
+          <input matInput type="password" placeholder="Enter password">
+        </mat-form-field>
+      </div>
+      <div class="field">
+        <mat-form-field *ngIf="forgot_password_flag == 'pass'">
+          <input matInput type="password" placeholder="Enter confirm password">
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button class="mat-button" (click)="changePassword()">
+      <span *ngIf="forgot_password_flag != 'pass'">Next</span>
+      <span *ngIf="forgot_password_flag == 'pass'">Submit</span>
+    </button>
+    <button matDialogClose class="mat-button">Cancel</button>
+  </mat-dialog-actions>
+</ng-template> -->
+
+
+<div class="my-overlay" *ngIf="showOverlay" style="display: flex; flex-direction: column;">
+  <i class="fa fa-spinner fa-spin" aria-hidden="true" style="color: white;"></i>
+  <span style="color:white; font-size: 30px;">Please wait...</span>
+</div>

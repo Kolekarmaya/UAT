@@ -1,0 +1,332 @@
+<div class="box-container">
+    <div style="display: flex;justify-content: space-between;">
+        <!-- <div class="redirectPage">                
+            <button mat-raised-button color="primary" type="button" (click)="gotoPage('dashboard-page')">Redirect to menu screen </button>
+        </div> -->
+        <div class="redirectPage">
+            <button *ngIf="!groupPayout" mat-raised-button color="primary" type="button"
+                (click)="gotoPage('dashboard-page')">Redirect to menu screen</button>
+            <button *ngIf="groupPayout" mat-raised-button color="primary" type="button"
+                (click)="gotoPage('groups-payout')">Redirect to menu screen</button>
+        </div>
+        <div class="redirectPage">
+            <!-- <a (click)="navigateToPrevious()" class="anchorTagStyle" [ngClass]="{disableATag: !blockPrevious}">
+                Redirect to previous page 
+            </a> -->
+            <button mat-raised-button color="warn" type="button" (click)="navigateToPrevious()"
+                [disabled]="!blockPrevious">Redirect to previous page</button>
+
+        </div>
+    </div>
+    <h2 class="mat-h2">Dashboard</h2>
+
+    <div>
+
+        <div class="box-container">
+
+            <div class="grid-3">
+                <h2 class="mat-h3" style="margin-top: auto;">Policy List</h2>
+                <div *ngIf="!noData" [ngClass]="checkClass()">
+                    <!-- <input type="text" placeholder="Search By Policy Details" matInput (keyup)="keyupSearchPolicy($event.target.value)"> -->
+                    <mat-form-field>
+                        <mat-label>Search By Policy Details</mat-label>
+                        <input type="text" placeholder="Search By Policy Details" matInput
+                            (keyup)="keyupSearchPolicy($event.target.value)">
+                    </mat-form-field>
+                </div>
+                <div class="right" *ngIf="!noData">
+                    <button mat-raised-button matTooltip="Export policy data to excel sheet" color="primary"
+                        (click)="exportAsXLSX()">
+                        Export To Excel
+                    </button>
+                    <button *ngIf="!hideDetails && this.routerState['processQcValue']=='FAIL'" mat-raised-button
+                        matTooltip="Fetch new policy details" color="primary" (click)="refreshPolicyData()"
+                        style="margin-left: 10px;">
+                        Refresh
+                    </button>
+                    <button *ngIf="!hideDetails && this.routerState['processQcValue']=='PASS'" mat-raised-button
+                        matTooltip="Fetch new policy details" color="primary" (click)="refreshBulkPolicyData()"
+                        style="margin-left: 10px;">
+                        Refresh
+                    </button>
+                    <!-- <button matTooltip="Fetch new policy details" mat-icon-button (click)="refreshPolicyData()">
+                        <mat-icon>loop</mat-icon>
+                    </button> -->
+                </div>
+            </div>
+
+            <div *ngIf="!noData">
+                <mat-table #table [dataSource]="table_data">
+                    <ng-container matColumnDef="SELECT">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                [aria-label]="checkboxLabel()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation();new()"
+                                (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                                [aria-label]="checkboxLabel(row)">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                  
+                    <ng-container matColumnDef="POLICY_NO">
+                        <mat-header-cell *matHeaderCellDef> POLICY_NO </mat-header-cell>
+                        <mat-cell *matCellDef="let element;"> {{element.POLICY_NO}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="THREAD_ID">
+                        <mat-header-cell *matHeaderCellDef> THREAD_ID </mat-header-cell>
+                        <mat-cell *matCellDef="let element;"> {{element.WFTHREAD}}</mat-cell>
+                    </ng-container>
+
+                     <!--  -->
+                     <ng-container matColumnDef="RESTRICT_INDICATOR">
+                        <mat-header-cell *matHeaderCellDef> restrict_indicator </mat-header-cell>
+                        <mat-cell *matCellDef="let element;"> {{element.RESTRICT_INDICATOR}}</mat-cell>
+                    </ng-container>
+                    <!--  -->
+                    <!--  -->
+                    <ng-container matColumnDef="SUSPEND_INDICATOR">
+                        <mat-header-cell *matHeaderCellDef> suspend_indicator </mat-header-cell>
+                        <mat-cell *matCellDef="let element;"> {{element.SUSPEND_INDICATOR}}</mat-cell>
+                    </ng-container>
+                    <!--  -->
+                  
+                    <ng-container matColumnDef="AUDITED_NET_PAYABLE">
+                        <mat-header-cell *matHeaderCellDef> AUDITED_NET_PAYABLE </mat-header-cell>
+                        <mat-cell *matCellDef="let element;"> {{element.AUDITED_NET_PAYABLE |
+                            number:'3.2-4'}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="PQ_QC_FLAG">
+                        <mat-header-cell *matHeaderCellDef> PQ_QC_FLAG </mat-header-cell>
+                        <mat-cell *matCellDef="let element;">
+                            <mat-select [(ngModel)]="element['PQ_QC_FLAG']"
+                                [disabled]="element['edit'] == true || element['EDIT'] == true"
+                                style="width: 50% !important;" placeholder="Select QC Flag"
+                                (selectionChange)="selectedQcFlagValue($event,element)">
+                                <mat-option *ngFor="let qcFlag of qcFlagValues" [value]="qcFlag.value">
+                                    {{qcFlag.text}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="PQ_QC_REMARKS">
+                        <mat-header-cell *matHeaderCellDef> PQ_QC_REMARKS </mat-header-cell>
+                        <mat-cell *matCellDef="let element;">
+                            <mat-select [(ngModel)]="element['PQ_QC_REMARKS']"
+                                [disabled]="element['edit'] == true || element['EDIT'] == true"
+                                style="width: 70% !important;" placeholder="Select Remark"
+                                (selectionChange)="selectedQcRemarkValue($event)">
+                                <mat-option *ngFor="let qcRemark of remarksValues" [value]="qcRemark.value">
+                                    {{qcRemark.text}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-cell>
+                    </ng-container>
+                    
+                    <!-- "inputDisabled"  -->
+                    <!-- rohit Ashwini changes -->
+
+                    <ng-container matColumnDef="EXPECTED">
+                        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                        <mat-cell *matCellDef="let element;" style="margin-right:20px ;">
+                            <mat-form-field>
+                                <input type="text" placeholder="Expected" matInput [(ngModel)]="element['EXPECTED']"
+                                    [disabled]="element['edit'] == true || element['EDIT'] == true" autocomplete="off">
+                            </mat-form-field>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="QC_Calculated_Value">
+                        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                        <mat-cell *matCellDef="let element;" style="margin-right:20px ;">
+                            <mat-form-field>
+                                <input type="number" placeholder="QC Calculated Value" matInput
+                                    [(ngModel)]="element['QC_Calculated_Value']"
+                                    [disabled]="element['edit'] == true || element['EDIT'] == true" autocomplete="off">
+                            </mat-form-field>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container *ngIf="!showAfterQCData" matColumnDef="actionsColumn">
+                        <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                        <mat-cell *matCellDef="let element;">
+                            <button mat-icon-button="" color="primary" [disabled]="element['edit'] == true"
+                                (click)="unableDisable(element)" *ngIf="this.routerState['processQcValue']=='PASS'">
+                                Edit
+                            </button>
+                            <button mat-icon-button="" color="primary" [disabled]="element['edit'] == true"
+                                (click)="getConfirmation(element)" *ngIf="this.routerState['processQcValue']=='FAIL'">
+                                Submit
+                            </button>
+                            <button mat-icon-button="" color="primary"
+                                [disabled]="element['edit'] == true || element['EDIT'] == true"
+                                (click)="bulkMessageBox('ok')" *ngIf="this.routerState['processQcValue']=='PASS'">
+                                Submit
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+            </div>
+            <div *ngIf="noData" class="noDataContainer">
+                <span>
+                    No Data Available.
+                </span>
+                <br />
+                <span style="font-size: small;">
+                    <a *ngIf="!groupPayout" [routerLink]="['/dashboard-page/']">
+                        Redirect to process page to fetch more data.
+                    </a>
+                    <a *ngIf="groupPayout" [routerLink]="['/groups-payout/']">
+                        Redirect to process page
+                    </a>
+                </span>
+            </div>
+            <!-- <div *ngIf= "noData" class="noDataContainer">
+                <span>
+                    No Data Available.
+                </span>
+                <br/>
+                <span style = "font-size: small;">
+                    <a [routerLink]="['/dashboard-page/']">
+                        Redirect to process page to fetch more data.
+                    </a>
+                </span>
+            </div>  -->
+            <div *ngIf="noMatchFound" style="text-align: center;padding: 20px;font-weight: 500;">
+                <span>
+                    No match found
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- all policy getConfirmation-->
+<div *ngIf="openConfirmationBox" class="my-overlay" style="padding: 30%; padding-top: 50px;padding-bottom: 0;">
+    <div class="customAlert" [ngClass]="(isError==true)?'errorbgcolor':'messagebgcolor'" style="
+                height: 190px;
+                border: groove;
+                
+                box-shadow: 5px 10px #888888;width: 500px;">
+        <div class="messagebody"
+            style="font-weight: 500;font-size:20px;padding-left: 20px; padding-bottom: 10px;padding-top:50px;padding-right: 20px;">
+            {{messagePopup}}
+        </div>
+
+        <div *ngIf="showMessageButton" style="text-align: right;margin-top: 30px;padding-right: 30px;">
+            <button style="width: 20%;height: 30px;margin-right: 10px;" (click)="showMessage('OK')">ok</button>
+            <button style="width: 20%;height: 30px;margin-right: 10px;" (click)="showMessage('CANCEL')">Cancel</button>
+        </div>
+        <div *ngIf="!showMessageButton" style="text-align: right;margin-top: 30px;padding-right: 30px;">
+            <button style="width: 20%;height: 30px;margin-right: 10px;" (click)="showAlert('OK')">OK</button>
+        </div>
+
+    </div>
+</div>
+<!--  -->
+<div *ngIf="policyMessage" class="my-overlay" style="padding: 30%; padding-top: 50px;padding-bottom: 0;">
+    <div class="customAlert" [ngClass]="(isError==true)?'errorbgcolor':'messagebgcolor'" style="
+                height: 190px;
+                border: groove;
+                
+                box-shadow: 5px 10px #888888;width: 500px;">
+        <div class="messagebody"
+            style="font-weight: 500;font-size:20px;padding-left: 20px; padding-bottom: 10px;padding-top:50px;padding-right: 20px;">
+            {{messagePopuped}}
+        </div>
+
+        <div *ngIf="showMessageB" style="text-align: right;margin-top: 30px;padding-right: 30px;">
+            <button style="width: 20%;height: 30px;margin-right: 10px;" (click)="showAbc('abc')">ok</button>
+            <button style="width: 20%;height: 30px;margin-right: 10px;" (click)="showAbc('CANCEL')">Cancel</button>
+        </div>
+        <div *ngIf="!showMessageB" style="text-align: right;margin-top: 30px;padding-right: 30px;">
+            <button style="width: 20%;height: 30px;margin-right: 10px;" (click)="showAlert('OK')">OK</button>
+        </div>
+
+    </div>
+</div>
+
+<!--  -->
+<!--  -->
+<div *ngIf="testMasesge2" class="my-overlay" style="padding: 30%; padding-top: 50px;padding-bottom: 0;">
+    <div class="customAlert" [ngClass]="(isError==true)?'errorbgcolor':'messagebgcolor'" style="
+                height: 190px;
+                border: groove;
+                
+                box-shadow: 5px 10px #888888;width: 500px;">
+        <div class="messagebody"
+            style="font-weight: 500;font-size:20px;padding-left: 20px; padding-bottom: 10px;padding-top:50px;padding-right: 20px;">
+            {{messagePopup}}
+        </div>
+
+        <div *ngIf="showMessageBM" style="text-align: right;margin-top: 30px;padding-right: 30px;">
+            <button style="width: 20%;height: 30px;margin-right: 10px;" (click)="showMessage('OK')">ok</button>
+            <button style="width: 20%;height: 30px;margin-right: 10px;" (click)="showMessage('CANCEL')">Cancel</button>
+        </div>
+        <div *ngIf="!showMessageBM" style="text-align: right;margin-top: 30px;padding-right: 30px;">
+            <button style="width: 20%;height: 30px;margin-right: 10px;" (click)="showAlert('OK')">OK</button>
+        </div>
+
+    </div>
+</div>
+<!--  -->
+<div *ngIf="displayMessage" class="my-overlay" style="padding: 30%; padding-top: 50px;padding-bottom: 0;">
+    <div class="customAlert" [ngClass]="(isError==true)?'errorbgcolor':'messagebgcolor'" style="
+                height: 190px;
+                border: groove;
+                box-shadow: 5px 10px #888888;width: 500px;">
+        <div class="messageheader" style="padding: 30px;font-weight: 500;font-size: 25px;padding-bottom: 15px;
+                                             background: #3f51b5;color: white;
+                                             padding-top: 10px;margin-bottom: 15px">
+            <!-- Information Message :  -->
+            {{ messageType }}
+        </div>
+        <div class="messagebody" style="font-weight: 500;padding-left: 30px; padding-bottom: 10px;">
+            <!-- server [ error_code : 1 ]  -->
+            {{ message }}
+        </div>
+        <div class="messagebody" style="text-align: center;font-weight: 500;font-size: 20px;">
+            <!-- No Data Available -->
+            {{ messageDetails }}
+        </div>
+
+        <div style="text-align: right;margin-top: 30px;padding-right: 30px;">
+            <button style="width: 20%;height: 30px;margin-right: 10px;" (click)="showAlert('OK')">OK</button>
+        </div>
+
+    </div>
+</div>
+
+
+<div *ngIf="openBulkBox" class="my-overlay" style="padding: 30%; padding-top: 50px;padding-bottom: 0;">
+    <div class="customAlert" [ngClass]="(isError==true)?'errorbgcolor':'messagebgcolor'" style="
+                height: 190px;
+                border: groove;
+                
+                box-shadow: 5px 10px #888888;width: 500px;">
+        <div class="messagebody"
+            style="font-weight: 500;font-size:20px;padding-left: 20px; padding-bottom: 10px;padding-top:50px;padding-right: 20px;">
+            {{bulkMessagePopup}}
+        </div>
+
+        <div *ngIf="showMessageButton" style="text-align: right;margin-top: 30px;padding-right: 30px;">
+            <button style="width: 20%;height: 30px;margin-right: 10px;" (click)="bulkMessageBox('ok')">OK</button>
+            <button style="width: 20%;height: 30px;margin-right: 10px;"
+                (click)="bulkMessageBox('cancel')">Cancel</button>
+        </div>
+        <div *ngIf="!showMessageButton" style="text-align: right;margin-top: 30px;padding-right: 30px;">
+            <button style="width: 20%;height: 30px;margin-right: 10px;" (click)="showAlert('OK')">OK</button>
+        </div>
+
+    </div>
+</div>

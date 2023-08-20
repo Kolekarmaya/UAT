@@ -1,0 +1,27 @@
+
+
+{
+    "response_code": 1,
+    "response_message": "No data available",
+    "response_text": [
+    ]
+    
+    
+  }
+  
+  'POL_ID',
+  'SYS_SSV_FACTOR',
+  'DOC',
+  'AUDITED_SSV_FACTOR',
+  'FUP',
+  'SYS_CVB_FACTOR',
+  'DOS',
+  'AUDITED_CVB_FACTOR',
+  'PT',
+  'SYS_GSV_FACTOR',
+  'PPA',
+  'AUDITED_GSV_FACTOR',
+  'SYSTEM_BONUS','AUDITED_BONUS','SYSTEM_TB','AUDITED_TB',
+  'SYS_CVB_VALUE','AUDITED_CVB_VALUE','SYS_GSV_VALUE','AUDITED_GSV_VALUE','SYS_SSV_VALUE','AUDITED_SSV_VALUE',
+  'NET_PAYABLE_SYS','AUDITED_NET_PAYABLE'
+  

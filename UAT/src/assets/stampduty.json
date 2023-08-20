@@ -1,0 +1,122 @@
+[
+    {
+        "pol_id": "1BCQ353808", 
+        "cvg_sum_ins_amt": 697000, 
+        "plan_id": "EP0063", 
+        "mudrank_deduct_amt": 139.4, 
+        "uin": "111N085V04", 
+        "basic_premium": 127718.28, 
+        "automated_amount": 139.4, 
+        "result": "PASS"
+    },
+    {
+        "pol_id": "1BYC483127", 
+        "cvg_sum_ins_amt": 300000, 
+        "plan_id": "EP0063", 
+        "mudrank_deduct_amt": 60, 
+        "uin": "111N085V04", 
+        "basic_premium": 50346, 
+        "automated_amount": 60, 
+        "result": "PASS"
+    },
+    {
+        "pol_id": "1BYC483127", 
+        "cvg_sum_ins_amt": 300000, 
+        "plan_id": "EP0063", 
+        "mudrank_deduct_amt": 60, 
+        "uin": "111N085V04", 
+        "basic_premium": 50346, 
+        "automated_amount": 60, 
+        "result": "PASS"
+    },
+    {
+        "pol_id": "1BYC483127", 
+        "cvg_sum_ins_amt": 300000, 
+        "plan_id": "EP0063", 
+        "mudrank_deduct_amt": 60, 
+        "uin": "111N085V04", 
+        "basic_premium": 50346, 
+        "automated_amount": 60, 
+        "result": "PASS"
+    },
+    {
+        "pol_id": "1BYC483127", 
+        "cvg_sum_ins_amt": 300000, 
+        "plan_id": "EP0063", 
+        "mudrank_deduct_amt": 60, 
+        "uin": "111N085V04", 
+        "basic_premium": 50346, 
+        "automated_amount": 60, 
+        "result": "PASS"
+    },
+    {
+        "pol_id": "1BYC483127", 
+        "cvg_sum_ins_amt": 300000, 
+        "plan_id": "EP0063", 
+        "mudrank_deduct_amt": 60, 
+        "uin": "111N085V04", 
+        "basic_premium": 50346, 
+        "automated_amount": 60, 
+        "result": "PASS"
+    },
+    {
+        "pol_id": "1BYC483127", 
+        "cvg_sum_ins_amt": 300000, 
+        "plan_id": "EP0063", 
+        "mudrank_deduct_amt": 60, 
+        "uin": "111N085V04", 
+        "basic_premium": 50346, 
+        "automated_amount": 60, 
+        "result": "PASS"
+    },
+    {
+        "pol_id": "1BYC483127", 
+        "cvg_sum_ins_amt": 300000, 
+        "plan_id": "EP0063", 
+        "mudrank_deduct_amt": 60, 
+        "uin": "111N085V04", 
+        "basic_premium": 50346, 
+        "automated_amount": 60, 
+        "result": "PASS"
+    },
+    {
+        "pol_id": "1BYC483127", 
+        "cvg_sum_ins_amt": 300000, 
+        "plan_id": "EP0063", 
+        "mudrank_deduct_amt": 60, 
+        "uin": "111N085V04", 
+        "basic_premium": 50346, 
+        "automated_amount": 60, 
+        "result": "PASS"
+    },
+    {
+        "POL_ID": "1BYC483127", 
+        "cvg_sum_ins_amt": 300000, 
+        "plan_id": "EP0063", 
+        "mudrank_deduct_amt": 60, 
+        "uin": "111N085V04", 
+        "basic_premium": 50346, 
+        "automated_amount": 60, 
+        "result": "PASS"
+    },
+    {
+        "POL_ID": "1BYC483127", 
+        "cvg_sum_ins_amt": 300000, 
+        "plan_id": "EP0063", 
+        "mudrank_deduct_amt": 60, 
+        "uin": "111N085V04", 
+        "basic_premium": 50346, 
+        "automated_amount": 60, 
+        "result": "PASS"
+    },
+    {
+        "pol_id": "1BYC483127", 
+        "cvg_sum_ins_amt": 300000, 
+        "plan_id": "EP0063", 
+        "mudrank_deduct_amt": 60, 
+        "uin": "111N085V04", 
+        "basic_premium": 50346, 
+        "automated_amount": 60, 
+        "result": "PASS"
+    }
+]

@@ -1,0 +1,4 @@
+{
+    "message": "Data fetched Successfully",
+    "displayColumns": ["POL_ID", "THREAD_ID", "AUDITED_NET_PAYABLE"]
+}

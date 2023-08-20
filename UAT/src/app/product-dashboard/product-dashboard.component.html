@@ -1,0 +1,21 @@
+<div class="box-container" style="margin-top: 20px;text-align: center;display: flex;justify-content: space-around;">
+    <ng-container>
+    <button mat-raised-button color="primary" type="button"  matTooltip="New Product" (click)="gs.navigateToUrl('new-product')">New Product</button>
+    <button mat-raised-button color="primary" type="button"  matTooltip="Existing Product" (click)="gs.navigateToUrl('existing-product')">Existing Product</button>
+    <button mat-raised-button color="primary" type="button"  matTooltip="MIS" (click)="gs.navigateToUrl('product-mis')">MIS</button>
+    </ng-container>
+    <!-- <div class="field">
+        <mat-form-field class="labelFont">
+          <mat-select [(ngModel)]="binding">
+            <mat-option *ngFor="let op of options" [value]="op">
+              {{op | titlecase}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+    <button mat-raised-button color="primary" type="button"  matTooltip="New Product" (click)="gs.navigateToUrl(binding)">Submit</button>
+
+      </div> -->
+    
+</div>

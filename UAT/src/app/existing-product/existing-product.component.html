@@ -1,0 +1,512 @@
+<div>
+<ng-container>
+  <div style="margin-left: 20px;display: flex;margin-bottom: 20px;">
+    <div>
+      <button mat-raised-button color="primary" type="button" matTooltip="Home"
+        (click)="gs.navigateToUrl('product-dashboard')">Home</button>
+    </div>
+    <div style="width: 100%;text-align: center;">
+      <button mat-raised-button color="primary" type="button" matTooltip="New Product">Existing Product</button>
+    </div>
+  </div>
+  <div style="display: flex;justify-content: space-evenly;">
+  
+  <form (ngSubmit)="fetchData()" #heroForm="ngForm">
+    <div style="display: flex;margin-right: 295px;">
+      <div style="margin-top: 18px;margin-right: 15px;">
+        <p>Product Type</p>
+      </div>
+      <div class="field">
+        <mat-form-field class="labelFont">
+          <mat-select name="productType" [(ngModel)]="model.productType" #producttype="ngModel" required (selectionChange)="filterProduct()">
+            <mat-option *ngFor="let type of productTypeArray" [value]="type">
+              {{type}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="submited && productType?.errors?.required">
+          Product Type is required
+        </mat-error>
+      </div>
+    </div>
+    <div style="display: flex;">
+      <div style="margin-top: 18px;margin-right: 7px;">
+        <p>Product Name</p>
+      </div>
+      <input type="text" list="prod" [(ngModel)]="model.productName"  matInput [ngModelOptions]="{standalone: true}" autocomplete="off"  required  class="input_style" (change)="filterUin()">
+      <datalist id="prod" *ngIf="prodNameArray">
+        <option *ngFor="let prodName of prodNameArray" [value]="prodName">{{prodName}}</option>
+      </datalist>
+    
+    </div>
+    <div style="display: flex;">
+      <div style="margin-top: 18px;margin-right: 80px;">
+        <p>UIN</p>
+      </div>
+      <input type="text" list="uin" [(ngModel)]="model.uin"  matInput [ngModelOptions]="{standalone: true}" autocomplete="off" required pattern="^[a-zA-Z0-9]+$" maxlength="12" class="input_style">
+      <datalist id="uin" *ngIf="uinArray">
+        <option *ngFor="let uin of uinArray" [value]="uin">{{uin}}</option>
+      </datalist>
+    
+    </div>
+    <div style="margin-left: 140px;">
+      <button mat-raised-button color="primary" type="button" [disabled]="!heroForm.form.valid" (click)="fetchData()">Search</button>
+    </div>
+  
+  </form>
+  
+  <ng-container>
+    <!-- *ngIf="showHideForm" -->
+  <form [formGroup]="addProductForm2" style="margin-top: 10px;" *ngIf="dataArray?.length">
+    <div>
+      <div class="section">
+       
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Product Code</mat-label>
+          <input type="text" autocomplete="off" matInput placeholder="Product Code" formControlName="PRODUCT_CODE" maxlength="4">
+          <mat-error *ngIf="addProductForm2?.controls['PRODUCT_CODE']?.invalid && addProductForm2?.controls['PRODUCT_CODE']?.touched && !addProductForm2?.controls['PRODUCT_CODE']?.errors?.pattern && !addProductForm2.controls['PRODUCT_CODE']?.hasError('maxlength')">
+            Product code is required!
+          </mat-error>
+          <mat-error *ngIf="addProductForm2.controls['PRODUCT_CODE']?.errors?.pattern" >
+            Enter valid product code!
+          </mat-error>
+          <mat-error *ngIf="addProductForm2.controls['PRODUCT_CODE']?.hasError('maxlength')">
+            Only upto 4 characters allowed!
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="section">
+        <mat-form-field appearance="fill">
+          <mat-label>Date Of Launching</mat-label>
+          <input matInput [matDatepicker]="picker" placeholder="Date Of Launching" formControlName="DATE_OF_LAUNCH">
+          <mat-error *ngIf="addProductForm2?.controls['DATE_OF_LAUNCH']?.invalid && addProductForm2?.controls['DATE_OF_LAUNCH']?.touched ">
+            Lauch date is required!
+          </mat-error>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+  
+      <div class="section">
+       
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Series Number</mat-label>
+          <input type="text" autocomplete="off" matInput placeholder="Series Number" formControlName="SERIES_NO" maxlength="2">
+          <mat-error *ngIf="addProductForm2?.controls['SERIES_NO']?.invalid && addProductForm2?.controls['SERIES_NO']?.touched && !addProductForm2?.controls['SERIES_NO']?.errors?.pattern && !addProductForm2.controls['SERIES_NO']?.hasError('maxlength')">
+            series number is required!
+          </mat-error>
+          <mat-error *ngIf="addProductForm2.controls['SERIES_NO']?.errors?.pattern && !addProductForm2.controls['SERIES_NO']?.hasError('maxlength')" >
+            Enter valid series number!
+          </mat-error>
+          <mat-error *ngIf="addProductForm2.controls['SERIES_NO']?.hasError('maxlength')">
+            Only upto upto 2 numbers allowed!
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- </form> -->
+  
+    </div>
+  </form>
+  </ng-container>
+  </div>
+  
+  <ng-container>
+    <!-- *ngIf="showHideForm" -->
+  <form [formGroup]="updateProductForm" style="margin-top: 10px;" *ngIf="dataArray?.length">
+   
+    <div class="" style="overflow-x: scroll;">
+      <div class="css-flex">
+        <div class="col-span-1 css-action" style="margin-top: 10px;">
+          <p>Action</p>
+        </div>
+        <div class="col-span-1 css-col" *ngFor="let item of headerArray" style="margin-top: 10px;">
+          <p> {{item}}</p>
+        </div>
+      </div>
+      <div formArrayName="data">
+        <div class="css-flex" *ngFor="let data of getDataArray.controls; let i = index,let l=last" [formGroupName]="i">
+          <ng-container>
+            <div class="col-span-1 css-action">
+              <!-- <mat-icon (click)="openDialogWithTemplateRef(deleteConfirmBox,'delete',i)" style="cursor: pointer;">delete</mat-icon> -->
+              <mat-icon (click)="openDialogWithTemplateRef(deleteBox,data,'delete',i)"  style="cursor: pointer;" title="Delete">delete</mat-icon>
+              <mat-icon (click)="unableDisable(data)" title="Edit" style="cursor: pointer;">create</mat-icon>
+              <mat-icon (click)="openDialogWithTemplateRef(confirmBox,data)" title="Save" style="cursor: pointer;">save</mat-icon>
+            </div>
+            <div class="col-span-1 css-col">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <input type="text" autocomplete="off" matInput  formControlName="PLAN_ID" maxlength="10">
+                
+                <mat-error *ngIf="updateProductForm?.controls['data']?.controls[i]?.controls['PLAN_ID']?.errors?.pattern && !updateProductForm?.controls['data']?.controls[i]?.controls['PLAN_ID']?.hasError('maxlength')" >
+                  Enter valid plan id!
+                </mat-error>
+                <mat-error *ngIf="updateProductForm?.controls['data']?.controls[i]?.controls['PLAN_ID']?.errors?.maxlength">
+                  Only upto 10 characters allowed!
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-span-1 css-col">
+             
+              <mat-form-field class="labelFont">
+                <mat-select formControlName="DEPARTMENT">
+                  <mat-option *ngFor="let dept of department" [value]="dept">
+                    {{dept}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="updateProductForm?.controls['data']?.controls[i]?.controls['DEPARTMENT']?.touched && updateProductForm?.controls['data']?.controls[i]?.controls['DEPARTMENT']?.invalid">
+                  Department is required!
+                </mat-error>
+              </mat-form-field>
+             
+            </div>
+            <div class="col-span-1 css-col">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <input type="text" autocomplete="off" matInput  formControlName="MODULE" maxlength="100">
+              
+                <mat-error *ngIf="updateProductForm?.controls['data']?.controls[i]?.controls['MODULE']?.errors?.maxlength">
+                  Only upto 100 characters allowed!
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-span-1 css-col">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <input type="text" autocomplete="off" matInput  formControlName="SUB_MODULE" maxlength="100">
+               
+                <mat-error *ngIf="updateProductForm?.controls['data']?.controls[i]?.controls['SUB_MODULE']?.errors?.maxlength">
+                  Only upto 100 characters allowed!
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-span-1 css-col">
+              <mat-form-field appearance="fill">
+                <input matInput [matDatepicker]="picker1" formControlName="MODULE_REQUIREMENT_DATE">
+                <mat-error *ngIf="updateProductForm?.controls['data']?.controls[i]?.controls['MODULE_REQUIREMENT_DATE']?.touched && updateProductForm?.controls['data']?.controls[i]?.controls['MODULE_REQUIREMENT_DATE']?.invalid">
+                  Module requirement date is required!
+                </mat-error>
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-span-1 css-col">
+              <mat-form-field class="labelFont">
+                <mat-select formControlName="MODULE_STATUS">
+                  <mat-option *ngFor="let module of moduleStatus" [value]="module">
+                    {{module}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="updateProductForm?.controls['data']?.controls[i]?.controls['MODULE_STATUS']?.touched && updateProductForm?.controls['data']?.controls[i]?.controls['MODULE_STATUS']?.invalid">
+                  Module status is required!
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-span-1 css-col">
+              <mat-form-field class="labelFont">
+                <mat-select formControlName="STAKEHOLDER_NAME">
+                  <mat-option *ngFor="let stake of stakeHolderName" [value]="stake">
+                    {{stake}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="updateProductForm?.controls['data']?.controls[i]?.controls['STAKEHOLDER_NAME']?.touched && updateProductForm?.controls['data']?.controls[i]?.controls['STAKEHOLDER_NAME']?.invalid">
+                  Stakeholder name is required!
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-span-1 css-col">
+              <mat-form-field appearance="fill">
+                <input matInput [matDatepicker]="picker2" formControlName="MODULE_ROLLED_OUT_DATE">
+                <mat-error *ngIf="updateProductForm?.controls['data']?.controls[i]?.controls['MODULE_ROLLED_OUT_DATE']?.touched && updateProductForm?.controls['data']?.controls[i]?.controls['MODULE_ROLLED_OUT_DATE']?.invalid">
+                  Module rollout date is required!
+                </mat-error>
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-span-1 css-col">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <input type="text" autocomplete="off" matInput  formControlName="WHIZIBLE_ID" maxlength="10">
+                
+                <mat-error *ngIf="updateProductForm?.controls['data']?.controls[i]?.controls['WHIZIBLE_ID']?.errors?.maxlength">
+                  Only upto 10 characters allowed!
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-span-1 css-col">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <textarea matInput formControlName="REMARKS" ></textarea>
+              </mat-form-field>
+            </div>
+          </ng-container>
+        </div>
+        <div>
+          <mat-icon  (click)="openDialogFormArray(deleteConfirmBox,'add')" style="cursor: pointer;">add_circle_outline</mat-icon>
+        </div>
+  
+      </div>
+    </div>
+    <!-- <div style="text-align: end;">
+      <button mat-raised-button color="primary" type="button" matTooltip="Submit"
+        (click)="openDialogWithTemplateRef(confirmBox)">Submit</button>
+    </div> -->
+  </form>
+  </ng-container>
+  
+</ng-container>
+
+  <ng-template #confirmBox>
+    <h1 mat-dialog-title>Sure ? </h1>
+    <div mat-dialog-content>
+      <p>You want to submit product ?</p>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button (click)="submit()">Ok</button>
+      <button mat-button cdkFocusInitial (click)="close()">Cancel</button>
+    </div>
+  </ng-template>
+
+    <ng-template #deleteBox>
+      <h1 mat-dialog-title>Sure ? </h1>
+      <div mat-dialog-content>
+        <p>You want to delete product ?</p>
+      </div>
+      <div mat-dialog-actions>
+        <button mat-button (click)="delete()">Ok</button>
+        <button mat-button cdkFocusInitial (click)="close()">Cancel</button>
+      </div>
+    </ng-template>
+
+
+    <ng-template #deleteConfirmBox>
+      <h1 mat-dialog-title>Sure ? </h1>
+      <div mat-dialog-content>
+        <p>You want to {{alertType}} product ?</p>
+      </div>
+      <div mat-dialog-actions>
+        <button mat-button (click)="confirm()">Ok</button>
+        <button mat-button cdkFocusInitial (click)="close()">Cancel</button>
+      </div>
+    </ng-template>
+
+    <ng-container *ngIf="false">
+      <div style="margin-left: 20px;display: flex;margin-bottom: 20px;">
+          <div>
+            <button mat-raised-button color="primary" type="button" matTooltip="Home"
+              (click)="gs.navigateToUrl('product-dashboard')">Home</button>
+          </div>
+          <div style="width: 100%;text-align: center;">
+            <button mat-raised-button color="primary" type="button" matTooltip="New Product">Existing Product</button>
+          </div>
+        </div>
+        
+        <ng-container>
+          <div style="display: flex;justify-content: center;">
+            <div style="margin-top: 18px;margin-right: 15px;">
+              <p>Product Type</p>
+            </div>
+            <div class="field">
+              <mat-form-field class="labelFont">
+                <mat-select [(ngModel)]="productType">
+                  <mat-option *ngFor="let type of productTypeArray" [value]="type">
+                    {{type}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div style="display: flex;justify-content: center;">
+            <div style="margin-top: 18px;margin-right: 15px;">
+              <p>Product Name</p>
+            </div>
+            <div class="field">
+              <mat-form-field class="labelFont">
+                <mat-select  [(ngModel)]="productName">
+                  <mat-option *ngFor="let type of productNameArray" [value]="type">
+                    {{type}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div style="display: flex;justify-content: center;">
+            <div style="margin-top: 18px;margin-right: 15px;">
+              <p>UIN</p>
+            </div>
+            <div class="field">
+              <mat-form-field class="labelFont">
+                <mat-select  [(ngModel)]="uin">
+                  <mat-option *ngFor="let type of uinArray" [value]="type">
+                    {{type}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div style="text-align: center;">
+            <button mat-raised-button color="primary" type="button" matTooltip="Submit" (click)="fetchData()">Search</button>
+          </div>
+        </ng-container>
+      
+      <ng-container *ngIf="dataArray?.length">
+          <form [formGroup]="updateProductForm">
+          <div class="" >
+            <div>
+              <table class="table table-striped table-bordered" style="margin: 10px;">
+                <thead>
+                  <tr>
+        
+                
+                    <th>Product Code</th>
+                    <th>Date Of Launching</th>
+                    <th>Series Number</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                   
+                    <td>
+                      <input formControlName="PRODUCT_CODE" class="form-control" disabled type="text" />
+                    </td>
+        
+                    <td>
+                      <mat-form-field appearance="fill">
+                        <input matInput [matDatepicker]="picker" formControlName="DATE_OF_LAUNCH" disabled>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                    </td>
+        
+                    <td>
+                      <input formControlName="SERIES_NO" class="form-control" disabled type="text" />
+                    </td>
+        
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        
+            <div style="max-height: 300px; overflow-y: auto;overflow-x: auto;">
+        
+              <table class="table table-striped table-bordered" style="margin: 10px;">
+                <thead>
+                  <tr>
+                    <th>Plan Id</th>
+                    <th>Department</th>
+                    <th>Module</th>
+                    <th>Sub Module</th>
+                    <th>Requirement Date</th>
+                    <th>Module Status</th>
+                    <th>StakeHolder Name</th>
+                    <th>Rollout Date</th>
+                    <th>Whizible Id</th>
+                    <th>Remarks</th>
+                    <th>Action</th>
+      
+                  </tr>
+                </thead>
+                <tbody formArrayName="data">
+                  <tr *ngFor="let data of getDataArray.controls; let i = index,let l=last" [formGroupName]="i">
+                    <td>
+                      <input formControlName="PLAN_ID" class="form-control"  type="text" />
+                    </td>
+        
+                    <td>
+                      <div class="field">
+                        <mat-form-field class="labelFont">
+                          <mat-select formControlName="DEPARTMENT">
+                            <mat-option *ngFor="let dept of department" [value]="dept">
+                              {{dept}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </td>
+        
+                    <td>
+                      <input formControlName="MODULE" class="form-control" type="text" />
+                    </td>
+        
+                    <td>
+                      <input formControlName="SUB_MODULE" class="form-control" type="text" />
+                    </td>
+        
+                    <td>
+                      <mat-form-field appearance="fill">
+                        <input matInput [matDatepicker]="picker1" formControlName="MODULE_REQUIREMENT_DATE">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field>
+                    </td>
+                    
+                    <td>
+                      <div class="field">
+                        <mat-form-field class="labelFont">
+                          <mat-select formControlName="MODULE_STATUS">
+                            <mat-option *ngFor="let module of moduleStatus" [value]="module">
+                              {{module}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </td>
+        
+                    <td>
+                      <div class="field">
+                        <mat-form-field class="labelFont">
+                          <mat-select formControlName="STAKEHOLDER_NAME">
+                            <mat-option *ngFor="let stake of stakeHolderName" [value]="stake">
+                              {{stake}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </td>
+        
+                    <td>
+                      <mat-form-field appearance="fill">
+                        <input matInput [matDatepicker]="picker2" formControlName="MODULE_ROLLED_OUT_DATE">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                      </mat-form-field>
+                    </td>
+        
+                    <td>
+                      <input formControlName="WHIZIBLE_ID" class="form-control" type="text" />
+                    </td>
+        
+                    <td>
+                      <input formControlName="REMARKS" class="form-control" type="text" />
+                    </td>
+                    <td style="display: flex;">
+                      <mat-icon (click)="unableDisable(data)" title="Edit" style="cursor: pointer;">create</mat-icon>
+                      <mat-icon (click)="openDialogWithTemplateRef(confirmBox,data)" title="Save" style="cursor: pointer;">save</mat-icon>
+                      <mat-icon (click)="openDialogWithTemplateRef(deleteBox,data,'delete',i)" style="cursor: pointer;" title="Delete">delete</mat-icon>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div style="width: 100%;text-align: end;">
+              
+                <button mat-raised-button color="primary" (click)="pushIntoData('add')">Add</button>
+      
+              </div>
+            </div>
+          </div>
+        </form>
+      </ng-container>
+      
+      <div  class="noDataContainer" *ngIf="!dataArray?.length && showData">
+        <span>
+            No Data Available.
+        </span>
+        <br/>
+        <span style = "font-size: small;">
+            <a [routerLink]="['/new-product/']">
+                Redirect to new product page to add data.
+            </a>
+        </span>
+      </div> 
+      </ng-container>
+      <div *ngIf="gs?.loader" style="position: absolute;top: 50%;left: 50%;transform: translate(10px, -50px);">
+        <mat-spinner [diameter]="35" color="primary"></mat-spinner>
+      </div>
+    </div>

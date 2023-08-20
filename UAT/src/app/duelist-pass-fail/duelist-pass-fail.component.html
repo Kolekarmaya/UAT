@@ -1,0 +1,35 @@
+<div class="box-container">
+    <div class="grid-2">
+        <h2 class="mat-h2">Dashboard</h2>
+        <div class="redirectPage">
+            <a [routerLink]="['/dashboard-page/']">
+                Redirect to process page
+            </a>
+        </div>
+    </div>
+    <div>
+
+        <div class="box-container" style="display: flex;justify-content: space-evenly;">
+            <ng-container *ngIf= "!noData">
+                <button mat-raised-button color="primary" type="button" (click)="navigateToUrl('PASS')">Pass</button>
+                <button mat-raised-button color="warn" type="button" (click)="navigateToUrl('FAIL')">Fail</button>
+                <button mat-raised-button matTooltip="Export policy data to excel sheet" color="primary"
+                    (click)="exportAsXLSX()">
+                    Export All To Excel
+                </button>
+            </ng-container>
+
+            <div *ngIf="noData" class="noDataContainer">
+                <span>
+                    No Data Available.
+                </span>
+                <br />
+                <span style="font-size: small;">
+                    <a [routerLink]="['/dashboard-page/']">
+                        Redirect to process page to fetch more data.
+                    </a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

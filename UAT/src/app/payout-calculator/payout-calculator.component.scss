@@ -1,0 +1,93 @@
+.errorbgcolor {
+background-color: #f1f18a;
+}
+
+.messagebgcolor {
+background-color: white;
+}
+
+.misheader {
+    font-weight: 700;
+    font-size: 30px;
+    text-align: center;
+    padding: 10px;
+    color: #757575;
+    /* border: 1px; */
+    border: 1px solid currentColor;
+    padding-bottom: 15px;
+  
+  }
+
+  .my-overlay i.fa.fa-spinner.fa-spin, .spinner-big {
+    font-size: 100px !important;
+}
+
+.my-overlay1 {
+    left: 0 !important;
+    top: 0 !important;
+    z-index: 10000 !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: fixed !important;
+    background-color: rgba(0,0,0,0.9) !important;
+    cursor: pointer !important;
+    visibility: visible !important;
+    transition: visibility 0s, opacity 0.4s linear !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: wait !important;
+}
+
+.mat-cell, mat-footer-cell, mat-header-cell {
+  text-align: center !important;
+  // font-size: 17px;
+}
+.mat-cell, mat-footer-cell, mat-header-cell {
+  // display: block;
+  justify-content: center;
+  white-space: nowrap;
+    padding: 10px;
+}
+// .mat-cell:first-of-type, mat-footer-cell:first-of-type, mat-header-cell:first-of-type {
+//   // padding-right: 24px;
+//   // min-width: 230px;
+//   // padding-left: 0px;
+// }
+// .mat-column-POLICY_NO {
+//   min-width: 100px;
+
+// }
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-left: 0px;
+}
+.mat-header-cell {
+  font-weight: 500;
+    color: black;
+    padding: 10px !important;
+}
+// .mat-column-POLICY_NO, .mat-column-UIN , .mat-column-ACTUAL_NET_PAYABLE ,
+// .mat-column-AUDITED_NET_PAYABLE, 
+// .mat-column-AUDITED_RESULT , .mat-column-CVB_FACTOR , .mat-column-DOS , .mat-column-PPT ,
+// .mat-column-SUM_ASSURED , .mat-column-PPA ,
+// .mat-column-NET_PAYABLE,
+// .mat-column-TOTAL_BONUS , .mat-column-CVB_BONUS , .mat-column-AUDITED_TERMINAL_BONUS , .mat-column-DIFF_CVB_VALUE , .mat-column-ACTUAL_CVB_VALUE
+// //  , .mat-column- ,
+// {
+//   // padding: 15px;
+//   // font-size: 16px;
+//   // font-size: 20px;
+//   // min-height: 90px;
+//   border: 1px solid currentColor;
+//   // padding-bottom: 0px;
+  
+// }
+.table {
+  width: 100%;
+}
+.mat-header-cell, .mat-cell  {
+  border: 1px solid currentColor;
+}
+.mat-header-cell {
+  text-align: center;
+}
